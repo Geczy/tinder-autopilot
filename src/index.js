@@ -8,17 +8,19 @@ const randomDelay = async () => {
 
 function fetchResource(input, init) {
   return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage({input, init}, messageResponse => {
+    chrome.runtime.sendMessage({ input, init }, messageResponse => {
       const [response, error] = messageResponse;
       if (response === null) {
         reject(error);
       } else {
         // Use undefined on a 204 - No Content
         const body = response.body ? new Blob([response.body]) : undefined;
-        resolve(new Response(body, {
-          status: response.status,
-          statusText: response.statusText,
-        }));
+        resolve(
+          new Response(body, {
+            status: response.status,
+            statusText: response.statusText
+          })
+        );
       }
     });
   });
@@ -88,27 +90,29 @@ const getMessagesForMatch = ({ id }) =>
       console.log(error);
     });
 
-const sendMessageToMatch = (matchID, message) =>
-  fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
-      platform: "web",
-      "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
-    },
-    body: `{"message":"${message}"}`,
-    method: "POST"
-  })
-    .then(response => {
-      return response.text();
+const sendMessageToMatch = (matchID, message) => {
+    console.log(matchID, message);
+    return fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
+        headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+            "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
+            platform: "web",
+            "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+        },
+        body: JSON.stringify({ message }),
+        method: "POST"
     })
-    .then(data => {
-      return data ? JSON.parse(data) : {};
-    })
-    .catch(error => {
-      console.log(error);
-    });
+        .then(response => {
+            return response.text();
+        })
+        .then(data => {
+            return data ? JSON.parse(data) : {};
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
 const tinderAssistant = (function() {
   const defaultMessage = `Hey {name}, this is an automated message to remind you of your upcoming "Netflix and Chill" appointment in the next week. To confirm your appointment text YES DADDY. To unsubscribe, please text WRONG HOLE. Standard text and bill rates do apply. Thanks for choosing Slide N Yo DMs`;
@@ -187,13 +191,9 @@ const tinderAssistant = (function() {
 
         pendingPromiseList.push(
           getMessagesForMatch(match)
-            .then(messageList => {
-              console.log(match, messageToSend, messageToSendL, messageList);
-
-              return messageList
-                ? !messageList.includes(messageToSendL)
-                : false;
-            })
+            .then(messageList =>
+              messageList ? !messageList.includes(messageToSendL) : false
+            )
             .then(shouldSend => {
               if (shouldSend) {
                 tinderAssistant.logger(
@@ -203,7 +203,7 @@ const tinderAssistant = (function() {
               }
 
               tinderAssistant.logger(
-                `Already sent to this person: ${get(match, "person.name")}`
+                `Already sent to ${get(match, "person.name")}`
               );
               return false;
             })
