@@ -101,13 +101,9 @@ var tinderAssistant = (function() {
 
         // Check for messages sent
         document.querySelectorAll(".msgWrp .text").forEach(t => {
-          if (
-              t.innerHTML.trim().toLowerCase() ===
-              messageToSend.trim().toLowerCase()
-          ) {
-            alreadySent = true;
-            break;
-          }
+          const activeMessageL = t.innerHTML.trim().toLowerCase();
+          const messageToSendL = messageToSend.trim().toLowerCase();
+          if (activeMessageL === messageToSendL) alreadySent = true;
         });
 
         if (alreadySent) {
