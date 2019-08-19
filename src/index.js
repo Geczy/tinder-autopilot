@@ -32,7 +32,7 @@ function generateRandomNumber(min = 800, max = 1500) {
 
 const getMatches = newOnly => {
   return fetchResource(
-    `https://api.gotinder.com/v2/matches?count=500&is_tinder_u=true&locale=en&message=${
+    `https://api.gotinder.com/v2/matches?count=100&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
     }`,
 
@@ -60,7 +60,7 @@ const getMatches = newOnly => {
 
 const getMessagesForMatch = ({ id }) =>
   fetchResource(
-    `https://api.gotinder.com/v2/matches/${id}/messages?count=200`,
+    `https://api.gotinder.com/v2/matches/${id}/messages?count=100`,
     {
       headers: {
         accept: "application/json",
