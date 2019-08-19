@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
   "author": "Matt Gates <info@mgates.me>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "tinder-wrapper": "^1.0.38"
+  }
 }
