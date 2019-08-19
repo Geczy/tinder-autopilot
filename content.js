@@ -16,8 +16,7 @@ var tinderAssistant = (function() {
       matchCount = 0;
   let isRunning = false,
       isRunningMessage = false,
-      infoBanner,
-      time = 1000;
+      infoBanner;
 
   return {
     events() {
@@ -107,34 +106,34 @@ var tinderAssistant = (function() {
               messageToSend.trim().toLowerCase()
           ) {
             alreadySent = true;
-            return;
+            break;
           }
         });
 
-        if (!alreadySent) {
+        if (alreadySent) {
+          this.logger("Already sent to this person");
+          return;
+        }
           this.logger("Sending a message to this person");
 
-          var el = document.querySelector("#content div > form > textarea");
-          if (!el) return;
+        const el = document.querySelector("#content div > form > textarea");
+        if (!el) return;
 
           el.value = messageToSend;
 
           // As @wOxxOm pointed out, we need to pass `{ bubbles: true }` to the options,
           // as React listens on the document element and not the individual input elements
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-          el.dispatchEvent(new Event("blur", { bubbles: true }));
-          var submitButton = document.querySelector("div > form > button");
-          if (submitButton) submitButton.click();
-        } else {
-          this.logger("Already sent to this person");
-        }
+          el.dispatchEvent(new Event("change", {bubbles: true}));
+          el.dispatchEvent(new Event("blur", {bubbles: true}));
+        const submitButton = document.querySelector("div > form > button");
+        if (submitButton) submitButton.click();
       }
 
       tinderAssistant.logger("Sent messages to all matches");
       tinderAssistant.stopMessage();
     },
     start() {
-      tinderAssistant.logger("Starting");
+      tinderAssistant.logger("Starting to swipe using a randomized interval");
       isRunning = true;
       infoBanner.querySelector(
           ".infoBannerActions .toggleSwitch__empty"
@@ -200,6 +199,13 @@ var tinderAssistant = (function() {
       };
 
       if (isRunning) {
+          try {
+              if(document.querySelector('[data-testid="addToHomeScreen"]')) {
+                  document.querySelector('[data-testid="addToHomeScreen"]').parentElement.querySelector("button:nth-of-type(2)").click();
+                  tinderAssistant.logger("Closing add to homescreen modal");
+              }
+          } catch(e) {}
+
         if (
             window.location.toString().indexOf("app/recs") > -1 ||
             window.location.toString().indexOf("app/matches") > -1
@@ -207,7 +213,7 @@ var tinderAssistant = (function() {
           const btns = document.querySelectorAll("button");
 
           if (btns.length > 0) {
-            if (btns.length == 7) {
+            if (btns.length === 7) {
               tinderAssistant.logger(
                   "Congrats! <strong>We</strong>'ve got a match! 🤡"
               );
@@ -345,7 +351,7 @@ var tinderAssistant = (function() {
              <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(t)">
                 <div class="D(f) Jc(sb) Ai(c)"></div>
                 <div class="menuItem__input Pos(r) W(100%) Cur(t)">
-                   <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="messageToSend" placeholder="Your message to send" type="text">${defaultMessage}</textarea>
+                   <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="messageToSend" placeholder="Your message to send">${defaultMessage}</textarea>
                 </div>
              </label>
           </div>
