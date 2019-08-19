@@ -1,3 +1,15 @@
+// const TinderWrapper = require('tinder-wrapper')
+//
+// const tinder = new TinderWrapper()
+// const facebookAccessToken = 'my-facebook-access-token'
+// const facebookUserId = 'my-facebook-id'
+//
+// tinder.authorize(facebookAccessToken, facebookUserId)
+//     .then(() => tinder.getRecommendations())
+//     .then(({ results }) => console.log(results))
+//
+// TinderWeb/LoginType
+
 const randomDelay = async () => {
   const rand = generateRandomNumber(800, 1200);
   return new Promise(resolve => setTimeout(resolve, rand));
