@@ -1,8 +1,10 @@
 import get from "lodash/get";
 import keyBy from "lodash/keyBy";
 
+let allMatches = [];
+
 const randomDelay = async () => {
-  const rand = generateRandomNumber(250, 500);
+  const rand = generateRandomNumber(350, 600);
   return new Promise(resolve => setTimeout(resolve, rand));
 };
 
@@ -30,10 +32,15 @@ function generateRandomNumber(min = 800, max = 1500) {
   return Math.random() * (max - min) + min;
 }
 
-const getMatches = newOnly => {
+let next_page_token = false;
+const getMatches = async newOnly => {
   return fetchResource(
     `https://api.gotinder.com/v2/matches?count=100&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
+    }${
+      typeof next_page_token === "string"
+        ? `&page_token=${next_page_token}`
+        : ""
     }`,
 
     {
@@ -54,8 +61,7 @@ const getMatches = newOnly => {
     })
     .then(data => {
       return data ? JSON.parse(data) : {};
-    })
-    .then(data => get(data, "data.matches", []));
+    });
 };
 
 const getMessagesForMatch = ({ id }) =>
@@ -74,7 +80,7 @@ const getMessagesForMatch = ({ id }) =>
     .then(response => {
       return response.text();
     })
-    .then(data => data ? JSON.parse(data) : {})
+    .then(data => (data ? JSON.parse(data) : {}))
     .then(data =>
       get(data, "data.messages", []).map(r =>
         get(r, "message", "")
@@ -163,8 +169,19 @@ const tinderAssistant = (function() {
         matchesTab.click();
       }
     },
-    runMessage() {
-      getMatches(newOnly).then(this.sendMessagesTo);
+    runMessage: async () => {
+      while (next_page_token) {
+        await tinderAssistant.loopMatches();
+      }
+
+      tinderAssistant.logger(
+        `Retrieved all match history: ${allMatches.length}`
+      );
+
+      allMatches = allMatches.reverse();
+
+      tinderAssistant.logger(`Looking for matches we have not sent yet to`);
+      tinderAssistant.sendMessagesTo(allMatches);
     },
     async sendMessagesTo(r) {
       const matchList = keyBy(r, "id");
@@ -188,7 +205,9 @@ const tinderAssistant = (function() {
 
         pendingPromiseList.push(
           getMessagesForMatch(match)
-            .then(messageList => messageList ? !messageList.includes(messageToSendL) : false)
+            .then(messageList =>
+              messageList ? !messageList.includes(messageToSendL) : false
+            )
             .then(shouldSend => {
               if (shouldSend) {
                 sendMessageToMatch(match.id, messageToSend).then(r => {
@@ -203,8 +222,13 @@ const tinderAssistant = (function() {
         );
       }
 
+      if (pendingPromiseList === []) {
+        tinderAssistant.logger("No more matches to send message to");
+        tinderAssistant.stopMessage();
+      }
+
       Promise.all(pendingPromiseList).then(r => {
-        tinderAssistant.logger("Finished auto messaging");
+        tinderAssistant.logger("No more matches to send message to");
         tinderAssistant.stopMessage();
       });
     },
@@ -229,6 +253,7 @@ const tinderAssistant = (function() {
       infoBanner.querySelector(
         ".infoBannerActionsMessage .toggleSwitch__empty"
       ).className = onToggle;
+      next_page_token = true;
       tinderAssistant.runMessage();
     },
     stopMessage() {
@@ -491,8 +516,14 @@ const tinderAssistant = (function() {
       txt.scrollTop = txt.scrollHeight;
     },
     init() {
+      tinderAssistant.loopMatches();
       tinderAssistant.logger("Welcome to Tinder Autopilot");
       tinderAssistant.events();
+    },
+    loopMatches: async () => {
+      const response = await getMatches(newOnly);
+      next_page_token = get(response, "data.next_page_token");
+      allMatches.push.apply(allMatches, get(response, "data.matches", []));
     }
   };
 })();
