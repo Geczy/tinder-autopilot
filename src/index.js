@@ -1,14 +1,117 @@
+import get from "lodash/get";
+import keyBy from "lodash/keyBy";
+
 const randomDelay = async () => {
-  const rand = generateRandomNumber(800, 1200);
+  const rand = generateRandomNumber(2000, 3200);
   return new Promise(resolve => setTimeout(resolve, rand));
 };
 
-function generateRandomNumber(min = 800, max = 1500) {
-  return (highlightedNumber = Math.random() * (max - min) + min);
+function fetchResource(input, init) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage({input, init}, messageResponse => {
+      const [response, error] = messageResponse;
+      if (response === null) {
+        reject(error);
+      } else {
+        // Use undefined on a 204 - No Content
+        const body = response.body ? new Blob([response.body]) : undefined;
+        resolve(new Response(body, {
+          status: response.status,
+          statusText: response.statusText,
+        }));
+      }
+    });
+  });
 }
 
+function generateRandomNumber(min = 800, max = 1500) {
+  return Math.random() * (max - min) + min;
+}
+
+const getMatches = newOnly => {
+  return fetchResource(
+    `https://api.gotinder.com/v2/matches?count=5&is_tinder_u=true&locale=en&message=${
+      newOnly ? 0 : 1
+    }`,
+
+    {
+      mode: "cors",
+      headers: {
+        referrer: "https://tinder.com/",
+        referrerPolicy: "origin",
+        Accept: "application/json; charset=UTF-8",
+        "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
+        platform: "web",
+        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+      },
+      method: "GET"
+    }
+  )
+    .then(response => {
+      return response.text();
+    })
+    .then(data => {
+      return data ? JSON.parse(data) : {};
+    })
+    .then(data => get(data, "data.matches", []));
+};
+
+const getMessagesForMatch = ({ id }) =>
+  fetchResource(
+    `https://api.gotinder.com/v2/matches/${id}/messages?count=100`,
+    {
+      headers: {
+        accept: "application/json",
+        "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
+        platform: "web",
+        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+      },
+      method: "GET"
+    }
+  )
+    .then(response => {
+      return response.text();
+    })
+    .then(data => {
+      return data ? JSON.parse(data) : {};
+    })
+    .then(data =>
+      get(data, "data.messages", []).map(r =>
+        get(r, "message", "")
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]+/g, "-")
+          .replace("thanks", "thank")
+      )
+    )
+    .catch(error => {
+      console.log(error);
+    });
+
+const sendMessageToMatch = (matchID, message) =>
+  fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
+      platform: "web",
+      "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+    },
+    body: `{"message":"${message}"}`,
+    method: "POST"
+  })
+    .then(response => {
+      return response.text();
+    })
+    .then(data => {
+      return data ? JSON.parse(data) : {};
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
 const tinderAssistant = (function() {
-  const defaultMessage = "What’s something you’re good at?";
+  const defaultMessage = `Hey {name}, this is an automated message to remind you of your upcoming "Netflix and Chill" appointment in the next week. To confirm your appointment text YES DADDY. To unsubscribe, please text WRONG HOLE. Standard text and bill rates do apply. Thanks for choosing Slide N Yo DMs`;
   const onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-pink) Bg($c-pink) Bdc($c-pink)::a TranslateX(20px)::a`;
   const offToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-disabled) Bgc($c-bg)`;
   let likeCount = 0,
@@ -61,73 +164,56 @@ const tinderAssistant = (function() {
       }
     },
     runMessage() {
-      this.goToMainPage();
-
-      if (newOnly) {
-        // No message sent to these
-        const newMatches = document.querySelectorAll(
-          ".matchListItem[href^='/app/messages/']"
-        );
-        if (newMatches && newMatches.length) {
-          this.sendMessagesTo(newMatches);
-        }
-      } else {
-        const messagesTab = document.querySelector(
-          "nav div:nth-child(2) > span"
-        );
-        if (messagesTab) {
-          messagesTab.click();
-        }
-
-        // Already messaged but should check to see if the new pickup line has been sent or not
-        const existingMatches = document.querySelectorAll(
-          ".messageListItem[href^='/app/messages/']"
-        );
-        if (existingMatches && existingMatches.length) {
-          this.sendMessagesTo(existingMatches);
-        }
-      }
+      getMatches(newOnly).then(this.sendMessagesTo);
     },
-    async sendMessagesTo(matchList) {
-      const messageToSend = document.getElementById("messageToSend").value;
-
-      for (const [index, match] of matchList.entries()) {
+    async sendMessagesTo(r) {
+      const matchList = keyBy(r, "id");
+      const pendingPromiseList = [];
+      for (const matchID of Object.keys(matchList)) {
         if (!isRunningMessage) break;
 
-        let alreadySent = false;
-        match.click();
+        const match = matchList[matchID];
+        const messageToSend = get(
+          document.getElementById("messageToSend"),
+          "value",
+          ""
+        ).replace("{name}", get(match, "person.name"));
 
-        // Wait for messages to load
-        await randomDelay();
+        const messageToSendL = messageToSend
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]+/g, "-")
+          .replace("thanks", "thank");
 
-        // Check for messages sent
-        document.querySelectorAll(".msgWrp .text").forEach(t => {
-          const activeMessageL = t.innerHTML.trim().toLowerCase();
-          const messageToSendL = messageToSend.trim().toLowerCase();
-          if (activeMessageL === messageToSendL) alreadySent = true;
-        });
+        pendingPromiseList.push(
+          getMessagesForMatch(match)
+            .then(messageList => {
+              console.log(match, messageToSend, messageToSendL, messageList);
 
-        if (alreadySent) {
-          this.logger("Already sent to this person");
-          return;
-        }
-        this.logger("Sending a message to this person");
+              return messageList
+                ? !messageList.includes(messageToSendL)
+                : false;
+            })
+            .then(shouldSend => {
+              if (shouldSend) {
+                tinderAssistant.logger(
+                  `Sending message to ${get(match, "person.name")}`
+                );
+                return sendMessageToMatch(match.id, messageToSend);
+              }
 
-        const el = document.querySelector("#content div > form > textarea");
-        if (!el) return;
-
-        el.value = messageToSend;
-
-        // As @wOxxOm pointed out, we need to pass `{ bubbles: true }` to the options,
-        // as React listens on the document element and not the individual input elements
-        el.dispatchEvent(new Event("change", { bubbles: true }));
-        el.dispatchEvent(new Event("blur", { bubbles: true }));
-        const submitButton = document.querySelector("div > form > button");
-        if (submitButton) submitButton.click();
+              tinderAssistant.logger(
+                `Already sent to this person: ${get(match, "person.name")}`
+              );
+              return false;
+            })
+        );
       }
 
-      tinderAssistant.logger("Sent messages to all matches");
-      tinderAssistant.stopMessage();
+      Promise.all(pendingPromiseList).then(r => {
+        tinderAssistant.logger("Sent messages to all matches");
+        tinderAssistant.stopMessage();
+      });
     },
     start() {
       tinderAssistant.logger("Starting to swipe using a randomized interval");
@@ -254,6 +340,7 @@ const tinderAssistant = (function() {
       }
     },
     logger(v) {
+      console.log(v);
       const size = 280;
       let txt;
       infoBanner = document.querySelector("#infoBanner");

@@ -2,7 +2,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   plugins: [
-    new CopyPlugin([{ from: "src/manifest.json", to: "manifest.json" }])
+    new CopyPlugin([{ from: "src/manifest.json", to: "manifest.json" },{ from: "src/bg.js", to: "bg.js" }])
   ],
   module: {
     rules: [

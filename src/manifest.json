@@ -1,13 +1,26 @@
 {
-   "author": "Tinder Autopilot",
-   "content_scripts": [ {
-      "js": [ "main.js" ],
-      "matches": [ "https://tinder.com/*" ]
-   } ],
-   "description": "Don't waste time swiping. Autopilot will do it for you.",
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwGdky04TZ7roW8X1kGu/7fAvRZ9/QqeIAjbVF6/AzdjQ35zmM75EoCB80xLz7jJo01ANENQK0aQ+4sRQyec0zytlLGON8ZUmxWG64s2ODwoAMvUbPeQ8z7/aDIZaipRaYit12RmhBAp6DtdRDHCRzKfzgbMluGqjP6Izp/YpbUaDsGoALopVucJKLAfWI0QzyO3TiHXpc3vnP5EjT+Ae3VdiQaFqG7YGTgWFOvrtpkr31Zpdk7H2xz2aKZQIx17UofyM0xSFPc4Z4sY2ZVVhwsCr8+ga0SgrMHZ3DUJJkycrMopxLfs1ajZVMbd09L2DZyOWQLNEKAZQfUp+ozLyJwIDAQAB",
-   "manifest_version": 2,
-   "name": "Autopilot for Tinder",
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.0.0.4"
+  "author": "Tinder Autopilot",
+  "background": {
+    "scripts": [
+      "bg.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "main.js"
+      ],
+      "matches": [
+        "https://tinder.com/*",
+        "https://*.gotinder.com/*"
+      ]
+    }
+  ],
+  "description": "Don't waste time swiping. Autopilot will do it for you.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwGdky04TZ7roW8X1kGu/7fAvRZ9/QqeIAjbVF6/AzdjQ35zmM75EoCB80xLz7jJo01ANENQK0aQ+4sRQyec0zytlLGON8ZUmxWG64s2ODwoAMvUbPeQ8z7/aDIZaipRaYit12RmhBAp6DtdRDHCRzKfzgbMluGqjP6Izp/YpbUaDsGoALopVucJKLAfWI0QzyO3TiHXpc3vnP5EjT+Ae3VdiQaFqG7YGTgWFOvrtpkr31Zpdk7H2xz2aKZQIx17UofyM0xSFPc4Z4sY2ZVVhwsCr8+ga0SgrMHZ3DUJJkycrMopxLfs1ajZVMbd09L2DZyOWQLNEKAZQfUp+ozLyJwIDAQAB",
+  "manifest_version": 2,
+  "name": "Autopilot for Tinder",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "0.0.0.4"
 }
