@@ -257,7 +257,7 @@ var tinderAssistant = (function () {
         const autopilot = /*html*/`
               <div class="Mt(20px)--ml Mt(16px)--s">
                 <h2 class="settings__title Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)"><span>Main Settings</span></h2>
-                <div class="settings__container settings__section Bgc(#fff)">
+                <div class="settings__container Px(8px) settings__section Bgc(#fff)">
                   <div class="menuItem Bgc(#fff)">
                       <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
                       <a href="#" class="infoBannerActions" style="display: block" title="Click to toggle">
@@ -281,7 +281,7 @@ var tinderAssistant = (function () {
         const massMessage = /*html*/`
         <div class="Mt(20px)--ml Mt(16px)--s">
           <h2 class="settings__title Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)"><span>Messaging Settings</span></h2>
-          <div class="settings__container settings__section Bgc(#fff)">
+          <div class="settings__container Px(8px) settings__section Bgc(#fff)">
             <div class="menuItem Bgc(#fff)">
                 <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
                 <a href="#" class="infoBannerActionsMessage" style="display: block" title="Click to toggle">
@@ -298,7 +298,7 @@ var tinderAssistant = (function () {
                 </label>
             </div>
           </div>
-          <div class="settings__container settings__section Bgc(#fff)">
+          <div class="settings__container Px(8px) settings__section Bgc(#fff)">
             <div class="menuItem Bgc(#fff)">
                 <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
                 <a href="#" class="infoBannerActionsMessageNewOnly" style="display: block" title="Click to toggle">
@@ -315,7 +315,7 @@ var tinderAssistant = (function () {
                 </label>
             </div>
           </div>          
-          <div class="settings__container settings__section Bgc(#fff)">
+          <div class="settings__container Px(8px) settings__section Bgc(#fff)">
           <div class="menuItem Bgc(#fff)">
              <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(t)">
                 <div class="D(f) Jc(sb) Ai(c)"></div>
