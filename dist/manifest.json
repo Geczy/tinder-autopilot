@@ -1,7 +1,7 @@
 {
    "author": "Tinder Autopilot",
    "content_scripts": [ {
-      "js": [ "dist/main.js" ],
+      "js": [ "main.js" ],
       "matches": [ "https://tinder.com/*" ]
    } ],
    "description": "Don't waste time swiping. Autopilot will do it for you.",

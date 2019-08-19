@@ -1,14 +1,18 @@
+const CopyPlugin = require("copy-webpack-plugin");
+
 module.exports = {
-    externals: ['tls', 'net', 'fs'],
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
-            }
-        ]
-    }
+  plugins: [
+    new CopyPlugin([{ from: "src/manifest.json", to: "manifest.json" }])
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      }
+    ]
+  }
 };
