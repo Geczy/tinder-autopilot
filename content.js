@@ -110,17 +110,17 @@ var tinderAssistant = (function() {
           this.logger("Already sent to this person");
           return;
         }
-          this.logger("Sending a message to this person");
+        this.logger("Sending a message to this person");
 
         const el = document.querySelector("#content div > form > textarea");
         if (!el) return;
 
-          el.value = messageToSend;
+        el.value = messageToSend;
 
-          // As @wOxxOm pointed out, we need to pass `{ bubbles: true }` to the options,
-          // as React listens on the document element and not the individual input elements
-          el.dispatchEvent(new Event("change", {bubbles: true}));
-          el.dispatchEvent(new Event("blur", {bubbles: true}));
+        // As @wOxxOm pointed out, we need to pass `{ bubbles: true }` to the options,
+        // as React listens on the document element and not the individual input elements
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+        el.dispatchEvent(new Event("blur", { bubbles: true }));
         const submitButton = document.querySelector("div > form > button");
         if (submitButton) submitButton.click();
       }
@@ -195,12 +195,15 @@ var tinderAssistant = (function() {
       };
 
       if (isRunning) {
-          try {
-              if(document.querySelector('[data-testid="addToHomeScreen"]')) {
-                  document.querySelector('[data-testid="addToHomeScreen"]').parentElement.querySelector("button:nth-of-type(2)").click();
-                  tinderAssistant.logger("Closing add to homescreen modal");
-              }
-          } catch(e) {}
+        try {
+          if (document.querySelector('[data-testid="addToHomeScreen"]')) {
+            document
+                .querySelector('[data-testid="addToHomeScreen"]')
+                .parentElement.querySelector("button:nth-of-type(2)")
+                .click();
+            tinderAssistant.logger("Closing add to homescreen modal");
+          }
+        } catch (e) {}
 
         if (
             window.location.toString().indexOf("app/recs") > -1 ||
