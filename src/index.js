@@ -2,7 +2,7 @@ import get from "lodash/get";
 import keyBy from "lodash/keyBy";
 
 const randomDelay = async () => {
-  const rand = generateRandomNumber(2000, 3200);
+  const rand = generateRandomNumber(500, 1500);
   return new Promise(resolve => setTimeout(resolve, rand));
 };
 
@@ -32,7 +32,7 @@ function generateRandomNumber(min = 800, max = 1500) {
 
 const getMatches = newOnly => {
   return fetchResource(
-    `https://api.gotinder.com/v2/matches?count=5&is_tinder_u=true&locale=en&message=${
+    `https://api.gotinder.com/v2/matches?count=2&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
     }`,
 
@@ -90,29 +90,27 @@ const getMessagesForMatch = ({ id }) =>
       console.log(error);
     });
 
-const sendMessageToMatch = (matchID, message) => {
-    console.log(matchID, message);
-    return fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
-        headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-            "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
-            platform: "web",
-            "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
-        },
-        body: JSON.stringify({ message }),
-        method: "POST"
+const sendMessageToMatch = (matchID, message) =>
+  fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
+      platform: "web",
+      "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+    },
+    body: JSON.stringify({ message }),
+    method: "POST"
+  })
+    .then(response => {
+      return response.text();
     })
-        .then(response => {
-            return response.text();
-        })
-        .then(data => {
-            return data ? JSON.parse(data) : {};
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
+    .then(data => {
+      return data ? JSON.parse(data) : {};
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
 const tinderAssistant = (function() {
   const defaultMessage = `Hey {name}, this is an automated message to remind you of your upcoming "Netflix and Chill" appointment in the next week. To confirm your appointment text YES DADDY. To unsubscribe, please text WRONG HOLE. Standard text and bill rates do apply. Thanks for choosing Slide N Yo DMs`;
@@ -196,16 +194,14 @@ const tinderAssistant = (function() {
             )
             .then(shouldSend => {
               if (shouldSend) {
-                tinderAssistant.logger(
-                  `Sending message to ${get(match, "person.name")}`
-                );
-                return sendMessageToMatch(match.id, messageToSend);
+                sendMessageToMatch(match.id, messageToSend).then(r => {
+                  if (get(r, "sent_date")) {
+                    tinderAssistant.logger(
+                      `Message sent to ${get(match, "person.name")}`
+                    );
+                  }
+                });
               }
-
-              tinderAssistant.logger(
-                `Already sent to ${get(match, "person.name")}`
-              );
-              return false;
             })
         );
       }
