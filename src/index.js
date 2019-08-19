@@ -32,7 +32,7 @@ function generateRandomNumber(min = 800, max = 1500) {
 
 const getMatches = newOnly => {
   return fetchResource(
-    `https://api.gotinder.com/v2/matches?count=2&is_tinder_u=true&locale=en&message=${
+    `https://api.gotinder.com/v2/matches?count=500&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
     }`,
 
@@ -60,7 +60,7 @@ const getMatches = newOnly => {
 
 const getMessagesForMatch = ({ id }) =>
   fetchResource(
-    `https://api.gotinder.com/v2/matches/${id}/messages?count=100`,
+    `https://api.gotinder.com/v2/matches/${id}/messages?count=200`,
     {
       headers: {
         accept: "application/json",
@@ -74,9 +74,7 @@ const getMessagesForMatch = ({ id }) =>
     .then(response => {
       return response.text();
     })
-    .then(data => {
-      return data ? JSON.parse(data) : {};
-    })
+    .then(data => data ? JSON.parse(data) : {})
     .then(data =>
       get(data, "data.messages", []).map(r =>
         get(r, "message", "")
@@ -172,6 +170,7 @@ const tinderAssistant = (function() {
       const matchList = keyBy(r, "id");
       const pendingPromiseList = [];
       for (const matchID of Object.keys(matchList)) {
+        await randomDelay();
         if (!isRunningMessage) break;
 
         const match = matchList[matchID];
@@ -189,9 +188,7 @@ const tinderAssistant = (function() {
 
         pendingPromiseList.push(
           getMessagesForMatch(match)
-            .then(messageList =>
-              messageList ? !messageList.includes(messageToSendL) : false
-            )
+            .then(messageList => messageList ? !messageList.includes(messageToSendL) : false)
             .then(shouldSend => {
               if (shouldSend) {
                 sendMessageToMatch(match.id, messageToSend).then(r => {
@@ -207,7 +204,7 @@ const tinderAssistant = (function() {
       }
 
       Promise.all(pendingPromiseList).then(r => {
-        tinderAssistant.logger("Sent messages to all matches");
+        tinderAssistant.logger("Finished auto messaging");
         tinderAssistant.stopMessage();
       });
     },
