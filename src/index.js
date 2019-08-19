@@ -1,15 +1,3 @@
-// const TinderWrapper = require('tinder-wrapper')
-//
-// const tinder = new TinderWrapper()
-// const facebookAccessToken = 'my-facebook-access-token'
-// const facebookUserId = 'my-facebook-id'
-//
-// tinder.authorize(facebookAccessToken, facebookUserId)
-//     .then(() => tinder.getRecommendations())
-//     .then(({ results }) => console.log(results))
-//
-// TinderWeb/LoginType
-
 const randomDelay = async () => {
   const rand = generateRandomNumber(800, 1200);
   return new Promise(resolve => setTimeout(resolve, rand));
@@ -19,17 +7,16 @@ function generateRandomNumber(min = 800, max = 1500) {
   return (highlightedNumber = Math.random() * (max - min) + min);
 }
 
-var tinderAssistant = (function() {
-  var defaultMessage = "What’s something you’re good at?";
-  var newOnly = false;
-  var onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-pink) Bg($c-pink) Bdc($c-pink)::a TranslateX(20px)::a`;
-  var offToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-disabled) Bgc($c-bg)`;
-  var likeCount = 0,
-      matchCount = 0;
-  let isRunning = false,
-      isRunningMessage = false,
-      infoBanner;
-
+const tinderAssistant = (function() {
+  const defaultMessage = "What’s something you’re good at?";
+  const onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-pink) Bg($c-pink) Bdc($c-pink)::a TranslateX(20px)::a`;
+  const offToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-disabled) Bgc($c-bg)`;
+  let likeCount = 0,
+    matchCount = 0,
+    isRunning = false,
+    isRunningMessage = false,
+    infoBanner,
+    newOnly = false;
   return {
     events() {
       infoBanner.querySelector(".infoBannerActions").onclick = function(e) {
@@ -37,19 +24,19 @@ var tinderAssistant = (function() {
         tinderAssistant.toggle();
       };
       infoBanner.querySelector(".infoBannerActionsMessage").onclick = function(
-          e
+        e
       ) {
         e.preventDefault();
         tinderAssistant.toggleMessage();
       };
 
       infoBanner.querySelector(
-          ".infoBannerActionsMessageNewOnly"
+        ".infoBannerActionsMessageNewOnly"
       ).onclick = function(e) {
         e.preventDefault();
         newOnly = !newOnly;
         infoBanner.querySelector(
-            ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
+          ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
         ).className = newOnly ? onToggle : offToggle;
       };
 
@@ -58,17 +45,17 @@ var tinderAssistant = (function() {
       }
     },
     goToMainPage() {
-      var matchesLink = document.querySelectorAll("a[href='/app/matches']");
+      const matchesLink = document.querySelectorAll("a[href='/app/matches']");
       if (matchesLink && matchesLink.length) {
         matchesLink[0].click();
       }
 
-      var mainMenuLink = document.querySelectorAll("a[href='/app/recs']");
+      const mainMenuLink = document.querySelectorAll("a[href='/app/recs']");
       if (mainMenuLink && mainMenuLink.length) {
         mainMenuLink[0].click();
       }
 
-      var matchesTab = document.querySelector("nav div:nth-child(1) > span");
+      const matchesTab = document.querySelector("nav div:nth-child(1) > span");
       if (matchesTab) {
         matchesTab.click();
       }
@@ -78,21 +65,23 @@ var tinderAssistant = (function() {
 
       if (newOnly) {
         // No message sent to these
-        var newMatches = document.querySelectorAll(
-            ".matchListItem[href^='/app/messages/']"
+        const newMatches = document.querySelectorAll(
+          ".matchListItem[href^='/app/messages/']"
         );
         if (newMatches && newMatches.length) {
           this.sendMessagesTo(newMatches);
         }
       } else {
-        var messagesTab = document.querySelector("nav div:nth-child(2) > span");
+        const messagesTab = document.querySelector(
+          "nav div:nth-child(2) > span"
+        );
         if (messagesTab) {
           messagesTab.click();
         }
 
         // Already messaged but should check to see if the new pickup line has been sent or not
-        var existingMatches = document.querySelectorAll(
-            ".messageListItem[href^='/app/messages/']"
+        const existingMatches = document.querySelectorAll(
+          ".messageListItem[href^='/app/messages/']"
         );
         if (existingMatches && existingMatches.length) {
           this.sendMessagesTo(existingMatches);
@@ -144,7 +133,7 @@ var tinderAssistant = (function() {
       tinderAssistant.logger("Starting to swipe using a randomized interval");
       isRunning = true;
       infoBanner.querySelector(
-          ".infoBannerActions .toggleSwitch__empty"
+        ".infoBannerActions .toggleSwitch__empty"
       ).className = onToggle;
       tinderAssistant.run();
     },
@@ -152,14 +141,14 @@ var tinderAssistant = (function() {
       tinderAssistant.logger("Autopilot stopped ⛔️");
       isRunning = false;
       infoBanner.querySelector(
-          ".infoBannerActions .toggleSwitch__empty"
+        ".infoBannerActions .toggleSwitch__empty"
       ).className = offToggle;
     },
     startMessage() {
       tinderAssistant.logger("Starting messages");
       isRunningMessage = true;
       infoBanner.querySelector(
-          ".infoBannerActionsMessage .toggleSwitch__empty"
+        ".infoBannerActionsMessage .toggleSwitch__empty"
       ).className = onToggle;
       tinderAssistant.runMessage();
     },
@@ -167,7 +156,7 @@ var tinderAssistant = (function() {
       tinderAssistant.logger("Messaging stopped ⛔️");
       isRunningMessage = false;
       infoBanner.querySelector(
-          ".infoBannerActionsMessage .toggleSwitch__empty"
+        ".infoBannerActionsMessage .toggleSwitch__empty"
       ).className = offToggle;
     },
     toggle() {
@@ -210,23 +199,23 @@ var tinderAssistant = (function() {
         try {
           if (document.querySelector('[data-testid="addToHomeScreen"]')) {
             document
-                .querySelector('[data-testid="addToHomeScreen"]')
-                .parentElement.querySelector("button:nth-of-type(2)")
-                .click();
+              .querySelector('[data-testid="addToHomeScreen"]')
+              .parentElement.querySelector("button:nth-of-type(2)")
+              .click();
             tinderAssistant.logger("Closing add to homescreen modal");
           }
         } catch (e) {}
 
         if (
-            window.location.toString().indexOf("app/recs") > -1 ||
-            window.location.toString().indexOf("app/matches") > -1
+          window.location.toString().indexOf("app/recs") > -1 ||
+          window.location.toString().indexOf("app/matches") > -1
         ) {
           const btns = document.querySelectorAll("button");
 
           if (btns.length > 0) {
             if (btns.length === 7) {
               tinderAssistant.logger(
-                  "Congrats! <strong>We</strong>'ve got a match! 🤡"
+                "Congrats! <strong>We</strong>'ve got a match! 🤡"
               );
               matchCount += 1;
               document.getElementById("matchCount").innerHTML = matchCount;
@@ -236,14 +225,14 @@ var tinderAssistant = (function() {
                 // Keep Swiping
                 document.querySelectorAll(".itsAMatch button")[0].click();
                 setTimeout(
-                    tinderAssistant.run,
-                    generateRandomNumber(3000, 4000)
+                  tinderAssistant.run,
+                  generateRandomNumber(3000, 4000)
                 );
               }
               //   sendMessage();
             } else if (
-                document.querySelectorAll(".recCard").length > 0 &&
-                !document.querySelector(".beacon__circle")
+              document.querySelectorAll(".recCard").length > 0 &&
+              !document.querySelector(".beacon__circle")
             ) {
               btns[4].click();
               likeCount += 1;
@@ -407,16 +396,16 @@ var tinderAssistant = (function() {
       `;
 
         infoBanner.innerHTML =
-            topBanner + counterLogs + autopilot + massMessage + loggerHeader;
+          topBanner + counterLogs + autopilot + massMessage + loggerHeader;
         el.appendChild(txt);
       }
 
       const now = new Date();
       txt = infoBanner.querySelector(".txt");
       const message = /*html*/ `<p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>${`0${now.getHours()}`.slice(
-          -2
+        -2
       )}:${`0${now.getMinutes()}`.slice(-2)}:${`0${now.getSeconds()}`.slice(
-          -2
+        -2
       )}.</span> ${v}</span></p>`;
       txt.innerHTML += message;
       txt.scrollTop = txt.scrollHeight;
