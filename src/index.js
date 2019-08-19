@@ -2,7 +2,7 @@ import get from "lodash/get";
 import keyBy from "lodash/keyBy";
 
 const randomDelay = async () => {
-  const rand = generateRandomNumber(500, 1500);
+  const rand = generateRandomNumber(250, 500);
   return new Promise(resolve => setTimeout(resolve, rand));
 };
 
