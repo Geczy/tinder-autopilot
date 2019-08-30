@@ -178,7 +178,8 @@ const tinderAssistant = (function() {
         `Retrieved all match history: ${allMatches.length}`
       );
 
-      allMatches = allMatches.reverse();
+      // To start with old matches we can reverse the array
+      // allMatches = allMatches.reverse();
 
       tinderAssistant.logger(`Looking for matches we have not sent yet to`);
       tinderAssistant.sendMessagesTo(allMatches);
