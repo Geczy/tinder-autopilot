@@ -317,22 +317,21 @@ const tinderAssistant = (function() {
           const btns = document.querySelectorAll("button");
 
           if (btns.length > 0) {
-            if (btns.length === 7) {
+
+            const matchFound = document.querySelectorAll(".itsAMatch");
+            if (matchFound && matchFound.length) {
               tinderAssistant.logger(
-                "Congrats! <strong>We</strong>'ve got a match! 🤡"
+                "Congrats! We've got a match! 🤡"
               );
               matchCount += 1;
               document.getElementById("matchCount").innerHTML = matchCount;
 
-              const matchFound = document.querySelectorAll(".itsAMatch");
-              if (matchFound && matchFound.length) {
-                // Keep Swiping
-                document.querySelectorAll(".itsAMatch button")[0].click();
-                setTimeout(
-                  tinderAssistant.run,
-                  generateRandomNumber(3000, 4000)
-                );
-              }
+              // Keep Swiping
+              document.querySelectorAll(".itsAMatch button")[0].click();
+              setTimeout(
+                tinderAssistant.run,
+                generateRandomNumber(3000, 4000)
+              );
               //   sendMessage();
             } else if (
               document.querySelectorAll(".recCard").length > 0 &&
