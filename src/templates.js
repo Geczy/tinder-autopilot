@@ -121,9 +121,13 @@ const counterLogs = (likeCount, matchCount) => /*html*/ `
 </div>
 </div>      
 `;
+
+const infoBanner = `<div id="infoBanner" class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)" style="position: fixed; top: 0px; left: 0px; width: 280px; height: 100%; border-right: 2px solid rgb(238, 238, 238); z-index: 99999;"></div>`;
+
 export {
   topBanner,
   autopilot,
+  infoBanner,
   massMessage,
   loggerHeader,
   counterLogs,

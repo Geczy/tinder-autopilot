@@ -7,6 +7,7 @@ import {
   onToggle,
   topBanner,
   autopilot,
+  infoBanner,
   massMessage,
   loggerHeader,
   counterLogs
@@ -23,23 +24,16 @@ class TinderAssistant {
   next_page_token = false;
 
   constructor() {
+    this.setupSidebar();
+    this.events();
+    this.logger("Welcome to Tinder Autopilot");
+  }
+
+  setupSidebar = () => {
     document.querySelector("#content").style.marginLeft = `280px`;
     const el = document.createElement("div");
-    el.id = "infoBanner";
-    el.className = "Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)";
-    el.style.position = "fixed";
-    el.style.top = "0px";
-    el.style.left = "0px";
-    el.style.width = `280px`;
-    el.style.height = "100%";
-    el.style.borderRight = "2px solid #eee";
-    el.style.zIndex = 99999;
+    el.innerHTML = infoBanner;
     document.body.appendChild(el);
-
-    txt = document.createElement("div");
-    txt.className = "txt";
-    txt.style.overflowY = "auto";
-    txt.style.height = "100%";
 
     this.infoBanner = document.querySelector("#infoBanner");
 
@@ -50,12 +44,9 @@ class TinderAssistant {
       autopilot +
       massMessage +
       loggerHeader +
-      txt.outerHTML +
+      `<div class="txt" style="overflow-y: auto; height: 100%;"></div>` +
       `</div>`;
-
-    this.logger("Welcome to Tinder Autopilot");
-    this.events();
-  }
+  };
 
   events = () => {
     document.querySelector(".infoBannerActions").onclick = e => {
