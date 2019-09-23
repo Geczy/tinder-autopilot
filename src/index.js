@@ -21,7 +21,7 @@ class TinderAssistant {
   infoBanner;
   newOnly = false;
   allMatches = [];
-  next_page_token = false;
+  nextPageToken = false;
 
   constructor() {
     this.setupSidebar();
@@ -90,7 +90,7 @@ class TinderAssistant {
   };
   runMessage = async () => {
     await this.loopMatches();
-    while (this.next_page_token) {
+    while (this.nextPageToken) {
       await this.loopMatches();
     }
 
@@ -170,7 +170,7 @@ class TinderAssistant {
     this.infoBanner.querySelector(
       ".infoBannerActionsMessage .toggleSwitch__empty"
     ).className = onToggle;
-    this.next_page_token = true;
+    this.nextPageToken = true;
     this.runMessage();
   };
   stopMessage = () => {
@@ -178,6 +178,9 @@ class TinderAssistant {
     this.isRunningMessage = false;
     this.infoBanner.querySelector(
       ".infoBannerActionsMessage .toggleSwitch__empty"
+    ).className = offToggle;
+    this.infoBanner.querySelector(
+      ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
     ).className = offToggle;
   };
   toggle = () => {
@@ -326,7 +329,7 @@ class TinderAssistant {
 
   loopMatches = async () => {
     const response = await getMatches(this.newOnly);
-    this.next_page_token = get(response, "data.this.next_page_token");
+    this.nextPageToken = get(response, "data.this.nextPageToken");
     this.allMatches.push.apply(
       this.allMatches,
       get(response, "data.matches", [])
