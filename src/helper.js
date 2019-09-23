@@ -7,4 +7,17 @@ const generateRandomNumber = (min = 800, max = 1500) => {
   return Math.random() * (max - min) + min;
 };
 
-export { randomDelay, generateRandomNumber };
+const logger = v => {
+  console.log(v);
+  const now = new Date();
+  const txt = document.querySelector(".txt");
+  const message = /*html*/ `<p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>
+  ${`0${now.getHours()}`.slice(-2)}:${`0${now.getMinutes()}`.slice(
+    -2
+  )}:${`0${now.getSeconds()}`.slice(-2)}.</span> 
+  ${v}</span></p>`;
+  txt.innerHTML += message;
+  txt.scrollTop = txt.scrollHeight;
+};
+
+export { logger, randomDelay, generateRandomNumber };

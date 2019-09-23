@@ -20,14 +20,12 @@ function fetchResource(input, init) {
   });
 }
 
-const getMatches = async newOnly => {
+const getMatches = async (newOnly, nextPageToken) => {
   return fetchResource(
     `https://api.gotinder.com/v2/matches?count=100&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
     }${
-      typeof next_page_token === "string"
-        ? `&page_token=${next_page_token}`
-        : ""
+      typeof nextPageToken === "string" ? `&page_token=${nextPageToken}` : ""
     }`,
 
     {
