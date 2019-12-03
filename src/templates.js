@@ -9,7 +9,7 @@ const topBanner = /*html*/ `
   <a class="Pos(a) D(f) Ai(c) C(#fff) Trsdu($normal) T(50%) Fz($m) Fz($responsiveLarge)--m Fz($ml)--l Whs(nw) Start(50%) Translate(-50%,-50%)" href="/app/profile">
     <span><span>Autopilot</span></span>
   </a>
-</div>        
+</div>
 `;
 
 const autopilot = /*html*/ `
@@ -28,12 +28,28 @@ const autopilot = /*html*/ `
                     </div>
                   </div>
               </div>
-              </a>    
+              </a>
             </label>
         </div>
+        <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>Begin automatically swiping right on all profiles.</span></p>
+        <div class="menuItem Bgc(#fff)">
+            <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+            <a href="#" class="infoBannerActionsHideMine" style="display: block" title="Click to toggle">
+              <div class="D(f) Jc(sb) Ai(c)">
+                  <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Only show unanswered messages</span></div>
+                  <div class="Py(14px)">
+                    <div class="toggleSwitch Cur(p) Pe(n)">
+                        <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox" >
+                        <div class="${offToggle}"></div>
+                    </div>
+                  </div>
+              </div>
+              </a>
+            </label>
+        </div>
+        <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.</span></p>
       </div>
-      <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>Begin automatically swiping right on all profiles.</span></p>
-  </div>            
+  </div>
 `;
 
 const massMessage = /*html*/ `
@@ -52,7 +68,7 @@ const massMessage = /*html*/ `
               </div>
             </div>
         </div>
-        </a>    
+        </a>
       </label>
   </div>
 </div>
@@ -69,10 +85,10 @@ const massMessage = /*html*/ `
               </div>
             </div>
         </div>
-        </a>    
+        </a>
       </label>
   </div>
-</div>          
+</div>
 <div class="settings__container Px(8px) settings__section Bgc(#fff)">
 <div class="menuItem Bgc(#fff)">
    <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(t)">
@@ -82,9 +98,9 @@ const massMessage = /*html*/ `
       </div>
    </label>
 </div>
-</div>          
+</div>
 <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>The message to send to matches.</span></p>
-</div>            
+</div>
 `;
 
 const loggerHeader = /*html*/ `
@@ -119,7 +135,7 @@ const counterLogs = (likeCount, matchCount) => /*html*/ `
       <h3 class="Heading__title Fz($s) Fw($semibold) Fz($ms)--m Mb(10px) My(4px)"><span id="matchCount">${matchCount}</span><br/><span> Matched</span></h3>
   </div>
 </div>
-</div>      
+</div>
 `;
 
 const infoBanner = `<div id="infoBanner" class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)" style="position: fixed; top: 0px; left: 0px; width: 280px; height: 100%; border-right: 2px solid rgb(238, 238, 238); z-index: 99999;"></div>`;

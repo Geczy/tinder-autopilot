@@ -15,6 +15,7 @@ class Sidebar extends Messeger {
   constructor(run, stop) {
     super();
 
+    this.isMyReplyHidden = false;
     this.runParent = run;
     this.stopParent = stop;
     this.sidebar();
@@ -66,6 +67,29 @@ class Sidebar extends Messeger {
     }
   };
 
+  scrollDown = cb => {
+    var currHeight = document.querySelector("#matchListWithMessages").scrollTop;
+    var totalHeight = document.querySelector("#matchListWithMessages")
+      .scrollHeight;
+    var newTotal = document.querySelector("div.messageList").children.length;
+
+    if (this.counter < 30 && currHeight < totalHeight) {
+      this.counter += 1;
+      document.querySelector("#matchListWithMessages").scrollTop +=
+        window.outerHeight;
+      setTimeout(() => this.scrollDown(cb), 100);
+    } else {
+      logger(`Finished scrolling, total matches found: ${newTotal}`);
+      cb();
+    }
+
+    if (newTotal > this.totalMessages) {
+      this.counter = 0;
+    }
+
+    this.totalMessages = newTotal;
+  };
+
   toggleMessage = () => {
     if (this.isRunningMessage) {
       this.stopMessage();
@@ -83,6 +107,49 @@ class Sidebar extends Messeger {
     document.querySelector(".infoBannerActionsMessage").onclick = e => {
       e.preventDefault();
       this.toggleMessage();
+    };
+
+    document.querySelector(".infoBannerActionsHideMine").onclick = e => {
+      e.preventDefault();
+
+      document.querySelector("#messages-tab").click();
+
+      if (this.isMyReplyHidden) {
+        this.isMyReplyHidden = false;
+        document.querySelector(
+          ".infoBannerActionsHideMine .toggleSwitch__empty"
+        ).className = offToggle;
+
+        document.querySelectorAll(".messageListItem__myReply").forEach(t => {
+          t.closest(".messageListItem").style.display = "flex";
+        });
+      } else {
+        this.isMyReplyHidden = true;
+        document.querySelector(
+          ".infoBannerActionsHideMine .toggleSwitch__empty"
+        ).className = onToggle;
+
+        const cb = () => {
+          document.querySelectorAll(".messageListItem__myReply").forEach(t => {
+            t.closest(".messageListItem").style.display = "none";
+          });
+
+          var unansweredCount = Array.prototype.slice
+            .call(document.querySelectorAll(".messageListItem"))
+            .filter(function(item, index) {
+              return item.style.display != "none";
+            }).length;
+
+          logger(`Total matches that need a response: ${unansweredCount}`);
+        };
+
+        this.totalMessages = document.querySelector(
+          "div.messageList"
+        ).children.length;
+        this.counter = 0;
+
+        this.scrollDown(cb);
+      }
     };
 
     document.querySelector(".infoBannerActionsMessageNewOnly").onclick = e => {
