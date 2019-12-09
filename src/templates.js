@@ -14,10 +14,10 @@ const topBanner = /*html*/ `
 
 const autopilot = /*html*/ `
     <div class="Mt(20px)--ml Mt(16px)--s">
-      <h2 class="settings__title Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)"><span>Main Settings</span></h2>
-      <div class="settings__container Px(8px) settings__section Bgc(#fff)">
-        <div class="menuItem Bgc(#fff)">
-            <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+      <h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Main Settings</h2>
+      <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+        <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+            <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
             <a href="#" class="infoBannerActions" style="display: block" title="Click to toggle">
               <div class="D(f) Jc(sb) Ai(c)">
                   <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Auto like</span></div>
@@ -31,9 +31,11 @@ const autopilot = /*html*/ `
               </a>
             </label>
         </div>
-        <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>Begin automatically swiping right on all profiles.</span></p>
-        <div class="menuItem Bgc(#fff)">
-            <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+        </div>
+        <div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">Begin automatically swiping right on all profiles.</div>
+      <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+        <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+            <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
             <a href="#" class="infoBannerActionsHideMine" style="display: block" title="Click to toggle">
               <div class="D(f) Jc(sb) Ai(c)">
                   <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Only show unanswered messages</span></div>
@@ -47,17 +49,17 @@ const autopilot = /*html*/ `
               </a>
             </label>
         </div>
-        <p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.</span></p>
       </div>
+      <div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.</div>
   </div>
 `;
 
 const massMessage = /*html*/ `
 <div class="Mt(20px)--ml Mt(16px)--s">
-<h2 class="settings__title Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)"><span>Messaging Settings</span></h2>
-<div class="settings__container Px(8px) settings__section Bgc(#fff)">
-  <div class="menuItem Bgc(#fff)">
-      <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Messaging Settings</h2>
+<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+  <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+      <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
       <a href="#" class="infoBannerActionsMessage" style="display: block" title="Click to toggle">
         <div class="D(f) Jc(sb) Ai(c)">
             <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Auto message</span></div>
@@ -72,9 +74,9 @@ const massMessage = /*html*/ `
       </label>
   </div>
 </div>
-<div class="settings__container Px(8px) settings__section Bgc(#fff)">
-  <div class="menuItem Bgc(#fff)">
-      <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+  <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+      <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
       <a href="#" class="infoBannerActionsMessageNewOnly" style="display: block" title="Click to toggle">
         <div class="D(f) Jc(sb) Ai(c)">
             <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>New matches only</span></div>
@@ -89,9 +91,9 @@ const massMessage = /*html*/ `
       </label>
   </div>
 </div>
-<div class="settings__container Px(8px) settings__section Bgc(#fff)">
-<div class="menuItem Bgc(#fff)">
-   <label class="menuItem__contents D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(t)">
+<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+<div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+   <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
       <div class="D(f) Jc(sb) Ai(c)"></div>
       <div class="menuItem__input Pos(r) W(100%) Cur(t)">
          <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="messageToSend" placeholder="Your message to send">${defaultMessage}</textarea>
@@ -105,7 +107,7 @@ const massMessage = /*html*/ `
 
 const loggerHeader = /*html*/ `
 <div class="Mt(20px)--ml Mt(16px)--s">
-<h2 class="settings__title Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)"><span>Activity</span></h2>
+<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Activity</h2>
 </div>
 `;
 
@@ -138,7 +140,7 @@ const counterLogs = (likeCount, matchCount) => /*html*/ `
 </div>
 `;
 
-const infoBanner = `<div id="infoBanner" class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)" style="position: fixed; top: 0px; left: 0px; width: 280px; height: 100%; border-right: 2px solid rgb(238, 238, 238); z-index: 99999;"></div>`;
+const infoBanner = `<div id="infoBanner" class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)" style="z-index:9999"></div>`;
 
 export {
   topBanner,

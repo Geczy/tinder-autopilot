@@ -78,7 +78,7 @@ class Interactions {
     return true;
   };
 
-  closeIntrustions = cb => {
+  closeInstructions = cb => {
     // Homescreen modal blocks us
     try {
       if (document.querySelector('[data-testid="addToHomeScreen"]')) {

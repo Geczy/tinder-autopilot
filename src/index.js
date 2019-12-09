@@ -23,7 +23,7 @@ class TinderAssistant extends Interactions {
       return;
     }
 
-    if (this.closeIntrustions(this.run)) {
+    if (this.closeInstructions(this.run)) {
       return;
     }
 
@@ -47,4 +47,6 @@ class TinderAssistant extends Interactions {
   };
 }
 
-new TinderAssistant();
+setTimeout(() => {
+  new TinderAssistant();
+}, 500);

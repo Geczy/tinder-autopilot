@@ -21,24 +21,29 @@ class Sidebar extends Messeger {
     this.sidebar();
     this.events();
   }
-
+  insertBefore = (el, referenceNode) => {
+    referenceNode.parentNode.insertBefore(el, referenceNode);
+  };
   sidebar = () => {
-    document.querySelector("#content").style.marginLeft = `280px`;
-    const el = document.createElement("div");
+    const el = document.createElement("aside");
+    el.className =
+      "H(100%) Fld(c) Pos(r) Flxg(0) Fxs(0) Flxb(25%) Miw(325px) Maw(375px)";
     el.innerHTML = infoBanner;
-    document.body.appendChild(el);
+    this.insertBefore(el, document.querySelector("aside:first-of-type"));
 
     this.infoBanner = document.querySelector("#infoBanner");
 
     this.infoBanner.innerHTML =
-      `<div style="height:100%">` +
+      `<nav class="Pos(r)  H(100%) gamepad-control-off">
+          <div class="H(100%)"><div class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)">
+          <div class="menu__content Bgc($c-bg-lite-blue) Pb(50px) Fz($responsiveLarge)--m H(100%) Ovs(touch) Ovx(h) Ovy(s) Ovsby(n)">` +
       topBanner +
       counterLogs(0, 0) +
       autopilot +
       massMessage +
       loggerHeader +
-      `<div class="txt" style="overflow-y: auto; height: 200px;"></div>` +
-      `</div>`;
+      `<div class="txt" style="overflow-y: auto; height: 100%;"></div>` +
+      `</div></div></div></nav>`;
   };
 
   start = () => {
@@ -112,7 +117,11 @@ class Sidebar extends Messeger {
     document.querySelector(".infoBannerActionsHideMine").onclick = e => {
       e.preventDefault();
 
-      document.querySelector("#messages-tab").click();
+      if (document.querySelector("#messages-tab")) {
+        document.querySelector("#messages-tab").click();
+      } else {
+        document.querySelector('a[href="/app/recs"]').click();
+      }
 
       if (this.isMyReplyHidden) {
         this.isMyReplyHidden = false;
