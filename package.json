@@ -10,23 +10,23 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.6.0",
-    "@babel/runtime": "^7.6.0",
-    "babel-eslint": "8",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/runtime": "^7.8.4",
+    "babel-eslint": "10.0.3",
     "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.0.4",
-    "eslint": "4.x",
-    "eslint-config-prettier": "^6.3.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "prettier": "^1.18.2",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   },
   "browserslist": "> 0.25%, not dead",
   "scripts": {
-    "dev": "webpack --mode development --watch",
+    "start": "webpack --mode development --watch",
     "build": "webpack --mode production"
   }
 }
