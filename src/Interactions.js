@@ -87,6 +87,7 @@ class Interactions {
           .parentElement.querySelector("button:nth-of-type(2)")
           .click();
         logger("Closing add to homescreen modal");
+        cb();
         return true;
       }
     } catch (e) {}
