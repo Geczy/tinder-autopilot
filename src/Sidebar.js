@@ -104,6 +104,25 @@ class Sidebar extends Messeger {
   };
 
   events = () => {
+    // Auto unmatch if you click unmatch button
+    const waitUntilElementExists = (selector, callback) => {
+      const el = document.querySelector(selector);
+      if (el) {
+        callback(el);
+      }
+      setTimeout(() => waitUntilElementExists(selector, callback), 500);
+    };
+
+    const selector =
+      'img[src="/static/build/b360b9cba7a935797f0d20382bc39b00.svg"]';
+
+    waitUntilElementExists(selector, el => {
+      document.querySelector("ul li:last-of-type button").click();
+      document
+        .querySelector('.modal-slide-up div button[type="button"]')
+        .click();
+    });
+
     document.querySelector(".infoBannerActions").onclick = e => {
       e.preventDefault();
       this.toggle();
