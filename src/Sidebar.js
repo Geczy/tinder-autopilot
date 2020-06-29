@@ -148,9 +148,11 @@ class Sidebar extends Messeger {
           ".infoBannerActionsHideMine .toggleSwitch__empty"
         ).className = offToggle;
 
-        document.querySelectorAll(".messageListItem__myReply").forEach((t) => {
-          t.closest(".messageListItem").style.display = "flex";
-        });
+        document
+          .querySelectorAll(".messageListItem__message svg")
+          .forEach((t) => {
+            t.closest(".messageListItem").style.display = "flex";
+          });
       } else {
         this.isMyReplyHidden = true;
         document.querySelector(
@@ -159,7 +161,7 @@ class Sidebar extends Messeger {
 
         const cb = () => {
           document
-            .querySelectorAll(".messageListItem__myReply")
+            .querySelectorAll(".messageListItem__message svg")
             .forEach((t) => {
               t.closest(".messageListItem").style.display = "none";
             });
