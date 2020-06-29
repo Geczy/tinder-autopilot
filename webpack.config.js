@@ -2,10 +2,12 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   plugins: [
-    new CopyPlugin([
-      { from: "manifest.json", to: "manifest.json" },
-      { from: "src/bg.js", to: "bg.js" }
-    ])
+    new CopyPlugin({
+      patterns: [
+        { from: "manifest.json", to: "manifest.json" },
+        { from: "src/bg.js", to: "bg.js" },
+      ],
+    }),
   ],
   module: {
     rules: [
@@ -13,9 +15,9 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
-      }
-    ]
-  }
+          loader: "babel-loader",
+        },
+      },
+    ],
+  },
 };
