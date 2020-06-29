@@ -23,7 +23,7 @@ class Interactions {
       return matchesTab.click();
     }
   };
-  sendMessage = cb => {
+  sendMessage = (cb) => {
     document.querySelector("a.button").click();
     setTimeout(() => {
       logger("Let's send a random GIF!");
@@ -78,7 +78,7 @@ class Interactions {
     return true;
   };
 
-  closeInstructions = cb => {
+  closeInstructions = (cb) => {
     // Homescreen modal blocks us
     try {
       if (document.querySelector('[data-testid="addToHomeScreen"]')) {

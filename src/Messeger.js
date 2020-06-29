@@ -62,7 +62,7 @@ class Messeger {
     this.sendMessagesTo(this.allMatches);
   };
 
-  sendMessagesTo = async r => {
+  sendMessagesTo = async (r) => {
     const matchList = keyBy(r, "id");
     const pendingPromiseList = [];
 
@@ -85,14 +85,14 @@ class Messeger {
 
       pendingPromiseList.push(
         getMessagesForMatch(match)
-          .then(messageList => {
+          .then((messageList) => {
             this.checkedMessage += 1;
             logger(`Checked ${this.checkedMessage}/${this.allMatches.length}`);
             return messageList ? !messageList.includes(messageToSendL) : false;
           })
-          .then(shouldSend => {
+          .then((shouldSend) => {
             if (shouldSend) {
-              sendMessageToMatch(match.id, messageToSend).then(r => {
+              sendMessageToMatch(match.id, messageToSend).then((r) => {
                 if (get(r, "sent_date")) {
                   logger(`Message sent to ${get(match, "person.name")}`);
                 }
@@ -106,7 +106,7 @@ class Messeger {
       logger("No more matches to send message to");
       this.stopMessage();
     } else {
-      Promise.all(pendingPromiseList).then(r => {
+      Promise.all(pendingPromiseList).then((r) => {
         logger("No more matches to send message to");
         this.stopMessage();
       });

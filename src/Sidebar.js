@@ -7,7 +7,7 @@ import {
   infoBanner,
   massMessage,
   loggerHeader,
-  counterLogs
+  counterLogs,
 } from "./templates";
 import Messeger from "./Messeger";
 
@@ -72,7 +72,7 @@ class Sidebar extends Messeger {
     }
   };
 
-  scrollDown = cb => {
+  scrollDown = (cb) => {
     var currHeight = document.querySelector("#matchListWithMessages").scrollTop;
     var totalHeight = document.querySelector("#matchListWithMessages")
       .scrollHeight;
@@ -116,24 +116,24 @@ class Sidebar extends Messeger {
     const selector =
       'img[src="/static/build/b360b9cba7a935797f0d20382bc39b00.svg"]';
 
-    waitUntilElementExists(selector, el => {
+    waitUntilElementExists(selector, (el) => {
       document.querySelector("ul li:last-of-type button").click();
       document
         .querySelector('.modal-slide-up div button[type="button"]')
         .click();
     });
 
-    document.querySelector(".infoBannerActions").onclick = e => {
+    document.querySelector(".infoBannerActions").onclick = (e) => {
       e.preventDefault();
       this.toggle();
     };
 
-    document.querySelector(".infoBannerActionsMessage").onclick = e => {
+    document.querySelector(".infoBannerActionsMessage").onclick = (e) => {
       e.preventDefault();
       this.toggleMessage();
     };
 
-    document.querySelector(".infoBannerActionsHideMine").onclick = e => {
+    document.querySelector(".infoBannerActionsHideMine").onclick = (e) => {
       e.preventDefault();
 
       if (document.querySelector("#messages-tab")) {
@@ -148,7 +148,7 @@ class Sidebar extends Messeger {
           ".infoBannerActionsHideMine .toggleSwitch__empty"
         ).className = offToggle;
 
-        document.querySelectorAll(".messageListItem__myReply").forEach(t => {
+        document.querySelectorAll(".messageListItem__myReply").forEach((t) => {
           t.closest(".messageListItem").style.display = "flex";
         });
       } else {
@@ -158,13 +158,15 @@ class Sidebar extends Messeger {
         ).className = onToggle;
 
         const cb = () => {
-          document.querySelectorAll(".messageListItem__myReply").forEach(t => {
-            t.closest(".messageListItem").style.display = "none";
-          });
+          document
+            .querySelectorAll(".messageListItem__myReply")
+            .forEach((t) => {
+              t.closest(".messageListItem").style.display = "none";
+            });
 
           var unansweredCount = Array.prototype.slice
             .call(document.querySelectorAll(".messageListItem"))
-            .filter(function(item, index) {
+            .filter(function (item, index) {
               return item.style.display != "none";
             }).length;
 
@@ -180,7 +182,9 @@ class Sidebar extends Messeger {
       }
     };
 
-    document.querySelector(".infoBannerActionsMessageNewOnly").onclick = e => {
+    document.querySelector(".infoBannerActionsMessageNewOnly").onclick = (
+      e
+    ) => {
       e.preventDefault();
       const toggleSwitch = document.querySelector(
         ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"

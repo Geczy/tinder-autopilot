@@ -1,13 +1,13 @@
 const randomDelay = async () => {
   const rand = generateRandomNumber(350, 600);
-  return new Promise(resolve => setTimeout(resolve, rand));
+  return new Promise((resolve) => setTimeout(resolve, rand));
 };
 
 const generateRandomNumber = (min = 800, max = 1500) => {
   return Math.random() * (max - min) + min;
 };
 
-const logger = v => {
+const logger = (v) => {
   console.log(v);
   const now = new Date();
   const txt = document.querySelector(".txt");

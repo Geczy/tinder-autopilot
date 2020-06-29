@@ -150,5 +150,5 @@ export {
   loggerHeader,
   counterLogs,
   offToggle,
-  onToggle
+  onToggle,
 };

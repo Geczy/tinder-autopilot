@@ -2,7 +2,7 @@ import get from "lodash/get";
 
 function fetchResource(input, init) {
   return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage({ input, init }, messageResponse => {
+    chrome.runtime.sendMessage({ input, init }, (messageResponse) => {
       const [response, error] = messageResponse;
       if (response === null) {
         reject(error);
@@ -12,7 +12,7 @@ function fetchResource(input, init) {
         resolve(
           new Response(body, {
             status: response.status,
-            statusText: response.statusText
+            statusText: response.statusText,
           })
         );
       }
@@ -36,15 +36,15 @@ const getMatches = async (newOnly, nextPageToken) => {
         Accept: "application/json; charset=UTF-8",
         "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
         platform: "web",
-        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken"),
       },
-      method: "GET"
+      method: "GET",
     }
   )
-    .then(response => {
+    .then((response) => {
       return response.text();
     })
-    .then(data => {
+    .then((data) => {
       return data ? JSON.parse(data) : {};
     });
 };
@@ -57,17 +57,17 @@ const getMessagesForMatch = ({ id }) =>
         accept: "application/json",
         "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
         platform: "web",
-        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+        "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken"),
       },
-      method: "GET"
+      method: "GET",
     }
   )
-    .then(response => {
+    .then((response) => {
       return response.text();
     })
-    .then(data => (data ? JSON.parse(data) : {}))
-    .then(data =>
-      get(data, "data.messages", []).map(r =>
+    .then((data) => (data ? JSON.parse(data) : {}))
+    .then((data) =>
+      get(data, "data.messages", []).map((r) =>
         get(r, "message", "")
           .trim()
           .toLowerCase()
@@ -75,7 +75,7 @@ const getMessagesForMatch = ({ id }) =>
           .replace("thanks", "thank")
       )
     )
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 
@@ -86,18 +86,18 @@ const sendMessageToMatch = (matchID, message) =>
       "content-type": "application/json",
       "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
       platform: "web",
-      "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken")
+      "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken"),
     },
     body: JSON.stringify({ message }),
-    method: "POST"
+    method: "POST",
   })
-    .then(response => {
+    .then((response) => {
       return response.text();
     })
-    .then(data => {
+    .then((data) => {
       return data ? JSON.parse(data) : {};
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 
