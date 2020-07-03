@@ -1,4 +1,4 @@
-import { logger } from "./helper";
+import { generateRandomNumber, logger } from "./helper";
 
 class Interactions {
   onMatchesPage = () => {

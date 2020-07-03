@@ -28,6 +28,7 @@ class Sidebar extends Messeger {
     const el = document.createElement("aside");
     el.className =
       "H(100%) Fld(c) Pos(r) Flxg(0) Fxs(0) Flxb(25%) Miw(325px) Maw(375px)";
+    el.style.cssText = "background-color:white;z-index:9999999;";
     el.innerHTML = infoBanner;
     this.insertBefore(el, document.querySelector("aside:first-of-type"));
 
