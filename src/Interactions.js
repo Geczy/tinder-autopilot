@@ -64,10 +64,10 @@ class Interactions {
       parseInt(document.getElementById("likeCount").innerHTML, 10) + 1;
     return true;
   };
-  matchFound = () => {
-    const matchFound = document.querySelectorAll(".itsAMatch");
+  static matchFound = () => {
+    const found = document.querySelectorAll(".itsAMatch");
 
-    if (!matchFound || !matchFound.length) {
+    if (!found || !found.length) {
       return false;
     }
 
