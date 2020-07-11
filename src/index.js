@@ -33,7 +33,7 @@ class TinderAssistant extends Interactions {
     }
 
     // Keep Swiping
-    if (this.matchFound()) {
+    if (Interactions.matchFound()) {
       return setTimeout(this.run, generateRandomNumber(3000, 4000));
     }
 

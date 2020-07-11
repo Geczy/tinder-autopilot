@@ -102,7 +102,7 @@ class Sidebar extends Messeger {
     if (el) {
       callback(el);
     }
-    setTimeout(() => waitUntilElementExists(selector, callback), 500);
+    setTimeout(() => this.waitUntilElementExists(selector, callback), 500);
   };
 
 
