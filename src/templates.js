@@ -55,22 +55,39 @@ const autopilot = `
   </div>
 `;
 
+const textboxGenerator = ({
+  className,
+  placeholder,
+  helpText,
+  defaultValue,
+}) => `
+<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+    <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+        <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+            <div class="D(f) Jc(sb) Ai(c)"></div>
+            <div class="menuItem__input Pos(r) W(100%) Cur(t)">
+                <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="${className}" placeholder="${placeholder}">${defaultValue}</textarea>
+            </div>
+        </label>
+    </div>
+</div>
+${
+  helpText &&
+  `<div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">${helpText}</div>`
+}
+`;
+
 const massMessage = `
 <div class="Mt(20px)--ml Mt(16px)--s">
 ${titleGenerator("Messaging Settings")}
 ${checkboxGenerator("infoBannerActionsMessage", "Auto message")}
 ${checkboxGenerator("infoBannerActionsMessageNewOnly", "New matches only")}
-<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
-<div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-   <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
-      <div class="D(f) Jc(sb) Ai(c)"></div>
-      <div class="menuItem__input Pos(r) W(100%) Cur(t)">
-         <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="messageToSend" placeholder="Your message to send">${defaultMessage}</textarea>
-      </div>
-   </label>
-</div>
-</div>
-<p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>The message to send to matches.</span></p>
+${textboxGenerator({
+  helpText: "The message to send to matches.",
+  placeholder: "Your message to send",
+  className: "messageToSend",
+  defaultValue: defaultMessage,
+})}
 </div>
 `;
 
