@@ -4,7 +4,7 @@ const onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(5
 
 const offToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-disabled) Bgc($c-bg)`;
 
-const topBanner = /*html*/ `
+const topBanner = `
 <div class="desktopNavbar Pos(r) Z(2) Trsdu($normal) Tsrdu($regular) CenterAlign Bg($blue-gradient)">
   <a class="Pos(a) D(f) Ai(c) C(#fff) Trsdu($normal) T(50%) Fz($m) Fz($responsiveLarge)--m Fz($ml)--l Whs(nw) Start(50%) Translate(-50%,-50%)" href="/app/profile">
     <span><span>Autopilot</span></span>
@@ -12,85 +12,54 @@ const topBanner = /*html*/ `
 </div>
 `;
 
-const autopilot = /*html*/ `
+const titleGenerator = (title) =>
+  `<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">${title}</h2>`;
+
+const checkboxGenerator = (className, label, helpText = "") => `
+<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
+    <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
+        <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+            <a href="#" class="${className}" style="display: block" title="Click to toggle">
+                <div class="D(f) Jc(sb) Ai(c)">
+                    <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>${label}</span></div>
+                    <div class="Py(14px)">
+                        <div class="toggleSwitch Cur(p) Pe(n)">
+                            <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox">
+                            <div class="${offToggle}"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </label>
+    </div>
+</div>
+${
+  helpText &&
+  `<div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">${helpText}</div>`
+}
+`;
+
+const autopilot = `
     <div class="Mt(20px)--ml Mt(16px)--s">
-      <h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Main Settings</h2>
-      <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
-        <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-            <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
-            <a href="#" class="infoBannerActions" style="display: block" title="Click to toggle">
-              <div class="D(f) Jc(sb) Ai(c)">
-                  <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Auto like</span></div>
-                  <div class="Py(14px)">
-                    <div class="toggleSwitch Cur(p) Pe(n)">
-                        <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox" >
-                        <div class="${offToggle}"></div>
-                    </div>
-                  </div>
-              </div>
-              </a>
-            </label>
-        </div>
-        </div>
-        <div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">Begin automatically swiping right on all profiles.</div>
-      <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
-        <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-            <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
-            <a href="#" class="infoBannerActionsHideMine" style="display: block" title="Click to toggle">
-              <div class="D(f) Jc(sb) Ai(c)">
-                  <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Only show unanswered messages</span></div>
-                  <div class="Py(14px)">
-                    <div class="toggleSwitch Cur(p) Pe(n)">
-                        <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox" >
-                        <div class="${offToggle}"></div>
-                    </div>
-                  </div>
-              </div>
-              </a>
-            </label>
-        </div>
-      </div>
-      <div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.</div>
+        ${titleGenerator("Main Settings")}
+        ${checkboxGenerator(
+          "infoBannerActions",
+          "Auto like",
+          "Begin automatically swiping right on all profiles."
+        )}
+        ${checkboxGenerator(
+          "infoBannerActionsHideMine",
+          "Only show unanswered messages",
+          "Useful if you just sent an auto message to a ton of people and only want to see the ones that responded."
+        )}
   </div>
 `;
 
-const massMessage = /*html*/ `
+const massMessage = `
 <div class="Mt(20px)--ml Mt(16px)--s">
-<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Messaging Settings</h2>
-<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
-  <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-      <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
-      <a href="#" class="infoBannerActionsMessage" style="display: block" title="Click to toggle">
-        <div class="D(f) Jc(sb) Ai(c)">
-            <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>Auto message</span></div>
-            <div class="Py(14px)">
-              <div class="toggleSwitch Cur(p) Pe(n)">
-                  <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox" >
-                  <div class="${offToggle}"></div>
-              </div>
-            </div>
-        </div>
-        </a>
-      </label>
-  </div>
-</div>
-<div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
-  <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-      <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
-      <a href="#" class="infoBannerActionsMessageNewOnly" style="display: block" title="Click to toggle">
-        <div class="D(f) Jc(sb) Ai(c)">
-            <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>New matches only</span></div>
-            <div class="Py(14px)">
-              <div class="toggleSwitch Cur(p) Pe(n)">
-                  <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox" >
-                  <div class="${offToggle}"></div>
-              </div>
-            </div>
-        </div>
-        </a>
-      </label>
-  </div>
-</div>
+${titleGenerator("Messaging Settings")}
+${checkboxGenerator("infoBannerActionsMessage", "Auto message")}
+${checkboxGenerator("infoBannerActionsMessageNewOnly", "New matches only")}
 <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
 <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
    <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
@@ -105,13 +74,11 @@ const massMessage = /*html*/ `
 </div>
 `;
 
-const loggerHeader = /*html*/ `
-<div class="Mt(20px)--ml Mt(16px)--s">
-<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">Activity</h2>
-</div>
-`;
+const loggerHeader = `<div class="Mt(20px)--ml Mt(16px)--s">${titleGenerator(
+  "Activity"
+)}</div>`;
 
-const counterLogs = (likeCount, matchCount) => /*html*/ `
+const counterLogs = (likeCount, matchCount) => `
 <div class="Mb(0) Mt(40px) D(f) Jc(sb) Flxb(50%) W(100%)">
 <div class="iconCombo Pos(r) P(16px) W(100%) CenterAlign Bdrs(4px) Bxsh($bxsh-btn) Pt(30px) Mstart(12px)--s Mstart(24px)--ml Mend(5px) Cur(p) Bgc(#fff) Ta(c)">
   <div class="iconCombo__icon Pos(a) Start(50%) T(0) Translate(-50%,-50%)">

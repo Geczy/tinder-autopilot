@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  fetch(request.input, request.init).then(
+  fetch(request.url, request.options).then(
     function (response) {
       return response.text().then(function (text) {
         sendResponse([
