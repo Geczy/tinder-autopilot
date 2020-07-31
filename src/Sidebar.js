@@ -113,15 +113,13 @@ class Sidebar extends Messenger {
   };
 
   events = () => {
-    this.waitUntilElementExists(
-      'img[src="/static/build/b360b9cba7a935797f0d20382bc39b00.svg"]',
-      () => {
-        document.querySelector("ul li:last-of-type button").click();
-        document
-          .querySelector('.modal-slide-up div button[type="button"]')
-          .click();
-      }
-    );
+    // Auto unmatch
+    this.waitUntilElementExists('img[alt="No Reason"]', () => {
+      document.querySelector("ul li:last-of-type button").click();
+      document
+        .querySelector('.modal-slide-up div button[type="button"]')
+        .click();
+    });
 
     document.querySelector(".infoBannerActions").onclick = (e) => {
       e.preventDefault();
