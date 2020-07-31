@@ -9,10 +9,9 @@ import {
   loggerHeader,
   counterLogs,
 } from "./templates";
-import Messeger from "./Messeger";
-import Interactions from "./Interactions";
+import Messenger from "./Messenger";
 
-class Sidebar extends Messeger {
+class Sidebar extends Messenger {
   constructor(run, stop) {
     super();
 
@@ -105,7 +104,6 @@ class Sidebar extends Messeger {
     setTimeout(() => this.waitUntilElementExists(selector, callback), 500);
   };
 
-
   toggleMessage = () => {
     if (this.isRunningMessage) {
       this.stopMessage();
@@ -124,8 +122,6 @@ class Sidebar extends Messeger {
           .click();
       }
     );
-
-    setInterval(Interactions.matchFound, 500);
 
     document.querySelector(".infoBannerActions").onclick = (e) => {
       e.preventDefault();

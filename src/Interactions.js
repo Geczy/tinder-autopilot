@@ -1,12 +1,13 @@
-import { generateRandomNumber, logger } from "./helper";
+import { logger } from "./helper";
 
 class Interactions {
-  onMatchesPage = () => {
+  isOnMatchesPage = () => {
     return (
       window.location.toString().indexOf("app/recs") !== -1 ||
       window.location.toString().indexOf("app/matches") !== -1
     );
   };
+
   goToMainPage = () => {
     const matchesLink = document.querySelectorAll("a[href='/app/matches']");
     if (matchesLink && matchesLink.length) {
@@ -23,36 +24,16 @@ class Interactions {
       return matchesTab.click();
     }
   };
-  sendMessage = (cb) => {
-    document.querySelector("a.button").click();
-    setTimeout(() => {
-      logger("Let's send a random GIF!");
-      document.querySelectorAll("img")[1].click();
-      setTimeout(() => {
-        logger("GIF chosen");
-        const imgs = document.querySelectorAll(".gif__messages__item");
-        console.log(new Date(), imgs.length);
-        const random = Math.floor(imgs.length * Math.random());
-        console.log(new Date(), random, imgs[random]);
-        // find a random gif
-        imgs[random].click();
-        setTimeout(() => {
-          document.querySelector(".chatNavBar a").click();
-          setTimeout(cb, generateRandomNumber());
-        }, generateRandomNumber());
-      }, generateRandomNumber());
-    }, generateRandomNumber());
-  };
+
   canSwipe = () => {
     return (
       document.querySelectorAll(".recCard").length > 0 &&
       !document.querySelector(".beacon__circle")
     );
   };
-  hasLike = () => {
-    const likeButton = document.querySelector('[aria-label="Like"]');
-    return likeButton;
-  };
+
+  hasLike = () => document.querySelector('[aria-label="Like"]');
+
   pressLike = () => {
     const likeButton = this.hasLike();
     if (!likeButton && !this.canSwipe()) {
@@ -64,7 +45,8 @@ class Interactions {
       parseInt(document.getElementById("likeCount").innerHTML, 10) + 1;
     return true;
   };
-  static matchFound = () => {
+
+  matchFound = () => {
     const found = document.querySelectorAll(".itsAMatch");
 
     if (!found || !found.length) {
@@ -91,21 +73,6 @@ class Interactions {
         return true;
       }
     } catch (e) {}
-
-    // Must be on matches page
-    if (!this.onMatchesPage()) {
-      logger("Going to main page to start liking");
-      this.goToMainPage();
-
-      const waitForMatchPage = setInterval(() => {
-        if (this.onMatchesPage()) {
-          clearInterval(waitForMatchPage);
-          cb();
-        }
-      }, 100);
-
-      return true;
-    }
   };
 }
 

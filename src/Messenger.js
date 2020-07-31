@@ -4,7 +4,7 @@ import { sendMessageToMatch, getMessagesForMatch, getMatches } from "./api";
 import { randomDelay, logger } from "./helper";
 import { onToggle, offToggle } from "./templates";
 
-class Messeger {
+class Messenger {
   newOnly;
   nextPageToken;
   isRunningMessage;
@@ -114,4 +114,4 @@ class Messeger {
   };
 }
 
-export default Messeger;
+export default Messenger;

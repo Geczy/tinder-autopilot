@@ -28,6 +28,19 @@ class TinderAssistant extends Interactions {
       return;
     }
 
+    // Must be on matches page
+    if (!this.isOnMatchesPage()) {
+      logger("Going to main page to start liking");
+      this.goToMainPage();
+
+      const waitForMatchPage = setInterval(() => {
+        if (this.isOnMatchesPage()) {
+          clearInterval(waitForMatchPage);
+          return setTimeout(this.run, generateRandomNumber());
+        }
+      }, 100);
+    }
+
     if (this.closeInstructions(this.run)) {
       return;
     }
@@ -38,7 +51,7 @@ class TinderAssistant extends Interactions {
     }
 
     // Keep Swiping
-    if (Interactions.matchFound()) {
+    if (this.matchFound()) {
       return setTimeout(this.run, generateRandomNumber(3000, 4000));
     }
 
