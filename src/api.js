@@ -3,14 +3,13 @@ import get from "lodash/get";
 const headers = {
   referrer: "https://tinder.com/",
   referrerPolicy: "origin",
-  Accept: "application/json; charset=UTF-8",
+  accept: "application/json; charset=UTF-8",
   "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
   platform: "web",
   "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken"),
 };
 
 const defaultOptions = {
-  mode: "cors",
   headers,
   method: "GET",
 };
@@ -19,6 +18,7 @@ function fetchResource(url, body = false) {
   return new Promise((resolve, reject) => {
     let options = defaultOptions;
     if (body) {
+      options.headers["content-type"] = "application/json";
       options.body = JSON.stringify(body);
       options.method = "POST";
     }
