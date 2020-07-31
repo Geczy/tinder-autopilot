@@ -7,22 +7,22 @@
   "author": "Matt Gates <info@mgates.me>",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.3",
-    "@babel/runtime": "^7.10.3",
+    "@babel/core": "^7.11.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/runtime": "^7.11.0",
     "babel-eslint": "10.1.0",
     "babel-loader": "^8.1.0",
-    "copy-webpack-plugin": "^6.0.2",
-    "eslint": "7.3.1",
+    "copy-webpack-plugin": "^6.0.3",
+    "eslint": "7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "invariant": "^2.2.4",
     "prettier": "^2.0.5",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "browserslist": [
