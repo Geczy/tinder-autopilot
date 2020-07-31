@@ -74,6 +74,11 @@ const autopilot = `
           "Only show unanswered messages",
           "Useful if you just sent an auto message to a ton of people and only want to see the ones that responded."
         )}
+        ${checkboxGenerator(
+          "infoBannerActionsAnonymous",
+          "Anonymous Mode",
+          "Hide profile pictures so you can take screenshots."
+        )}
   </div>
 `;
 

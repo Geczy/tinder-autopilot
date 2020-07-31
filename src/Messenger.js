@@ -2,17 +2,21 @@ import get from "lodash/get";
 import keyBy from "lodash/keyBy";
 import { sendMessageToMatch, getMessagesForMatch, getMatches } from "./api";
 import { randomDelay, logger } from "./helper";
-import { onToggle, offToggle } from "./templates";
+import { onToggle } from "./templates";
 
 class Messenger {
-  newOnly;
   nextPageToken;
   isRunningMessage;
   allMatches = [];
   checkedMessage = 0;
 
   loopMatches = async () => {
-    const response = await getMatches(this.newOnly, this.nextPageToken);
+    const response = await getMatches(
+      document.querySelector(
+        ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
+      ).className === onToggle,
+      this.nextPageToken
+    );
     this.nextPageToken = get(response, "data.next_page_token");
     this.allMatches.push.apply(
       this.allMatches,
@@ -20,30 +24,17 @@ class Messenger {
     );
   };
 
-  startMessage = () => {
+  start = () => {
     this.checkedMessage = 0;
     logger("Starting messages");
-    this.newOnly =
-      document.querySelector(
-        ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
-      ).className === onToggle;
     this.isRunningMessage = true;
-    document.querySelector(
-      ".infoBannerActionsMessage .toggleSwitch__empty"
-    ).className = onToggle;
     this.nextPageToken = true;
     this.runMessage();
   };
 
-  stopMessage = () => {
+  stop = () => {
     logger("Messaging stopped ⛔️");
     this.isRunningMessage = false;
-    document.querySelector(
-      ".infoBannerActionsMessage .toggleSwitch__empty"
-    ).className = offToggle;
-    document.querySelector(
-      ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
-    ).className = offToggle;
   };
 
   runMessage = async () => {
@@ -104,11 +95,11 @@ class Messenger {
 
     if (pendingPromiseList === []) {
       logger("No more matches to send message to");
-      this.stopMessage();
+      this.stop();
     } else {
       Promise.all(pendingPromiseList).then((r) => {
         logger("No more matches to send message to");
-        this.stopMessage();
+        this.stop();
       });
     }
   };

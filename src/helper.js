@@ -19,4 +19,12 @@ const logger = (v) => {
   txt.innerHTML = message + txt.innerHTML;
 };
 
-export { logger, randomDelay, generateRandomNumber };
+const waitUntilElementExists = (selector, callback) => {
+  const el = document.querySelector(selector);
+  if (el) {
+    callback(el);
+  }
+  setTimeout(() => this.waitUntilElementExists(selector, callback), 500);
+};
+
+export { logger, randomDelay, generateRandomNumber, waitUntilElementExists };

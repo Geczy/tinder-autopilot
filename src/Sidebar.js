@@ -1,4 +1,3 @@
-import { logger } from "./helper";
 import {
   onToggle,
   offToggle,
@@ -10,20 +9,39 @@ import {
   counterLogs,
 } from "./templates";
 import Messenger from "./Messenger";
+import Swiper from "./Swiper";
+import HideUnanswered from "./HideUnanswered";
+import { waitUntilElementExists } from "./helper";
 
-class Sidebar extends Messenger {
-  constructor(run, stop) {
-    super();
+class Sidebar {
+  constructor() {
+    this.hideUnanswered = new HideUnanswered();
+    this.swiper = new Swiper();
+    this.messenger = new Messenger();
 
-    this.isMyReplyHidden = false;
-    this.runParent = run;
-    this.stopParent = stop;
     this.sidebar();
     this.events();
   }
+
   insertBefore = (el, referenceNode) => {
     referenceNode.parentNode.insertBefore(el, referenceNode);
   };
+
+  toggleCheckbox = (selector, onCb = false, offCb = false) => {
+    document.querySelector(selector).onclick = (e) => {
+      e.preventDefault();
+
+      const toggleStatus = document.querySelector(
+        `${selector} .toggleSwitch__empty`
+      );
+      const className = toggleStatus.className;
+      const isOn = className === onToggle;
+      toggleStatus.className = isOn ? offToggle : onToggle;
+      if (isOn && offCb) offCb();
+      if (!isOn && onCb) onCb();
+    };
+  };
+
   sidebar = () => {
     const el = document.createElement("aside");
     el.className =
@@ -47,152 +65,38 @@ class Sidebar extends Messenger {
       `</div></div></div></nav>`;
   };
 
-  start = () => {
-    logger("Starting to swipe using a randomized interval");
-    this.isRunning = true;
-    document.querySelector(
-      ".infoBannerActions .toggleSwitch__empty"
-    ).className = onToggle;
-    this.runParent();
-  };
-
-  stop = () => {
-    logger("Autopilot stopped ⛔️");
-    this.isRunning = false;
-    document.querySelector(
-      ".infoBannerActions .toggleSwitch__empty"
-    ).className = offToggle;
-    this.stopParent();
-  };
-
-  toggle = () => {
-    if (this.isRunning) {
-      this.stop();
-    } else {
-      this.start();
-    }
-  };
-
-  scrollDown = (cb) => {
-    var currHeight = document.querySelector("#matchListWithMessages").scrollTop;
-    var totalHeight = document.querySelector("#matchListWithMessages")
-      .scrollHeight;
-    var newTotal = document.querySelector("div.messageList").children.length;
-
-    if (this.counter < 30 && currHeight < totalHeight) {
-      this.counter += 1;
-      document.querySelector("#matchListWithMessages").scrollTop +=
-        window.outerHeight;
-      setTimeout(() => this.scrollDown(cb), 100);
-    } else {
-      logger(`Finished scrolling, total matches found: ${newTotal}`);
-      cb();
-    }
-
-    if (newTotal > this.totalMessages) {
-      this.counter = 0;
-    }
-
-    this.totalMessages = newTotal;
-  };
-
-  waitUntilElementExists = (selector, callback) => {
-    const el = document.querySelector(selector);
-    if (el) {
-      callback(el);
-    }
-    setTimeout(() => this.waitUntilElementExists(selector, callback), 500);
-  };
-
-  toggleMessage = () => {
-    if (this.isRunningMessage) {
-      this.stopMessage();
-    } else {
-      this.startMessage();
-    }
-  };
-
   events = () => {
     // Auto unmatch
-    this.waitUntilElementExists('img[alt="No Reason"]', () => {
+    waitUntilElementExists('img[alt="No Reason"]', () => {
       document.querySelector("ul li:last-of-type button").click();
       document
         .querySelector('.modal-slide-up div button[type="button"]')
         .click();
     });
 
-    document.querySelector(".infoBannerActions").onclick = (e) => {
-      e.preventDefault();
-      this.toggle();
-    };
+    this.toggleCheckbox(
+      ".infoBannerActions",
+      this.swiper.start,
+      this.swiper.stop
+    );
 
-    document.querySelector(".infoBannerActionsMessage").onclick = (e) => {
-      e.preventDefault();
-      this.toggleMessage();
-    };
+    this.toggleCheckbox(
+      ".infoBannerActionsMessage",
+      this.messenger.start,
+      this.messenger.stop
+    );
 
-    document.querySelector(".infoBannerActionsHideMine").onclick = (e) => {
-      e.preventDefault();
+    this.toggleCheckbox(
+      ".infoBannerActionsHideMine",
+      this.hideUnanswered.start,
+      this.hideUnanswered.stop
+    );
 
-      if (document.querySelector("#messages-tab")) {
-        document.querySelector("#messages-tab").click();
-      } else {
-        document.querySelector('a[href="/app/recs"]').click();
-      }
+    this.toggleCheckbox(".infoBannerActionsMessageNewOnly");
+  };
 
-      if (this.isMyReplyHidden) {
-        this.isMyReplyHidden = false;
-        document.querySelector(
-          ".infoBannerActionsHideMine .toggleSwitch__empty"
-        ).className = offToggle;
-
-        document
-          .querySelectorAll(".messageListItem__message svg")
-          .forEach((t) => {
-            t.closest(".messageListItem").style.display = "flex";
-          });
-      } else {
-        this.isMyReplyHidden = true;
-        document.querySelector(
-          ".infoBannerActionsHideMine .toggleSwitch__empty"
-        ).className = onToggle;
-
-        const cb = () => {
-          document
-            .querySelectorAll(".messageListItem__message svg")
-            .forEach((t) => {
-              t.closest(".messageListItem").style.display = "none";
-            });
-
-          var unansweredCount = Array.prototype.slice
-            .call(document.querySelectorAll(".messageListItem"))
-            .filter(function (item, index) {
-              return item.style.display != "none";
-            }).length;
-
-          logger(`Total matches that need a response: ${unansweredCount}`);
-        };
-
-        this.totalMessages = document.querySelector(
-          "div.messageList"
-        ).children.length;
-        this.counter = 0;
-
-        this.scrollDown(cb);
-      }
-    };
-
-    document.querySelector(".infoBannerActionsMessageNewOnly").onclick = (
-      e
-    ) => {
-      e.preventDefault();
-      const toggleSwitch = document.querySelector(
-        ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
-      );
-
-      const className = toggleSwitch.className;
-      toggleSwitch.className = className === onToggle ? offToggle : onToggle;
-    };
+  static getCheckboxValue = (selector) => {
+    return document.querySelector(selector).className === onToggle;
   };
 }
 
