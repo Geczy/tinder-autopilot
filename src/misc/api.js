@@ -73,9 +73,41 @@ const getMessagesForMatch = ({ id }) =>
     )
   );
 
-const sendMessageToMatch = (matchID, message) =>
-  fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
-    message
-  });
+const getProfileData = () => {
+  try {
+    return JSON.parse(localStorage.getItem('TinderAutopilot/ProfileData'));
+  } catch {
+    return false;
+  }
+};
+
+const getSnapchatUsername = () => {
+  const profile = getProfileData();
+  const snapAccount = get(profile, 'data.contact_cards.populated_cards', []).find(
+    (a) => a.contact_type === 'snapchat'
+  );
+  return snapAccount ? snapAccount.contact_id : false;
+};
+
+// To send a snapchat username to a match id
+// sendMessageToMatch('1234', { type: 'snapchat' });
+const sendMessageToMatch = (matchID, options) => {
+  const user = getSnapchatUsername();
+
+  const body = options;
+  if (options && options.type) {
+    switch (options.type) {
+      case 'snapchat':
+        if (!user) throw new Error('No snapchat user exists');
+        body.message = user;
+        body.type = 'contact_card';
+        body.contact_type = 'snapchat';
+        break;
+      default:
+        break;
+    }
+  }
+  return fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, body);
+};
 
 export { sendMessageToMatch, getMessagesForMatch, getMatches, getMyProfile };
