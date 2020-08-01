@@ -60,17 +60,17 @@ const autopilot = `
     <div class="Mt(20px)--ml Mt(16px)--s">
         ${titleGenerator('Main Settings')}
         ${checkboxGenerator(
-          'infoBannerActions',
+          'tinderAutopilot',
           'Auto like',
           'Begin automatically swiping right on all profiles.'
         )}
         ${checkboxGenerator(
-          'infoBannerActionsHideMine',
+          'tinderAutopilotHideMine',
           'Only show unanswered messages',
           'Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.'
         )}
         ${checkboxGenerator(
-          'infoBannerActionsAnonymous',
+          'tinderAutopilotAnonymous',
           'Anonymous Mode',
           'Hide profile pictures so you can take screenshots.'
         )}
@@ -80,8 +80,8 @@ const autopilot = `
 const massMessage = `
 <div class="Mt(20px)--ml Mt(16px)--s">
 ${titleGenerator('Messaging Settings')}
-${checkboxGenerator('infoBannerActionsMessage', 'Auto message')}
-${checkboxGenerator('infoBannerActionsMessageNewOnly', 'New matches only')}
+${checkboxGenerator('tinderAutopilotMessage', 'Auto message')}
+${checkboxGenerator('tinderAutopilotMessageNewOnly', 'New matches only')}
 ${textboxGenerator({
   helpText: 'The message to send to matches.',
   placeholder: 'Your message to send',

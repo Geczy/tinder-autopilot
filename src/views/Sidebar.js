@@ -53,7 +53,7 @@ class Sidebar {
       document.querySelector('.modal-slide-up div button[type="button"]').click();
     });
 
-    this.bindCheckbox('.infoBannerActionsAnonymous');
+    this.bindCheckbox('.tinderAutopilotAnonymous');
 
     this.bindCheckbox(this.messenger.newSelector);
 

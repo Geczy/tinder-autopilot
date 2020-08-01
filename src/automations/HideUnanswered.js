@@ -1,7 +1,7 @@
 import { logger } from '../misc/helper';
 
 class HideUnanswered {
-  selector = '.infoBannerActionsHideMine';
+  selector = '.tinderAutopilotHideMine';
 
   totalMessages = 0;
 

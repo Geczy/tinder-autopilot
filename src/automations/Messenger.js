@@ -5,9 +5,9 @@ import { randomDelay, logger } from '../misc/helper';
 import { getCheckboxValue, toggleCheckbox } from '../views/Sidebar';
 
 class Messenger {
-  selector = '.infoBannerActionsMessage';
+  selector = '.tinderAutopilotMessage';
 
-  newSelector = '.infoBannerActionsMessageNewOnly';
+  newSelector = '.tinderAutopilotMessageNewOnly';
 
   nextPageToken;
 

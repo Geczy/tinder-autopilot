@@ -2,7 +2,7 @@ import { logger, generateRandomNumber } from '../misc/helper';
 import Interactions from '../misc/Interactions';
 
 class Swiper {
-  selector = '.infoBannerActions';
+  selector = '.tinderAutopilot';
 
   isRunning = false;
 
