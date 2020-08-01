@@ -84,7 +84,7 @@ class Swiper {
 
     // Keep Swiping
     if (this.matchFound()) {
-      return setTimeout(this.run, generateRandomNumber(3000, 4000));
+      return setTimeout(this.run, generateRandomNumber(500, 900));
     }
 
     // What we came here to do, swipe right!
