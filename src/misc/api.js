@@ -1,26 +1,26 @@
-import get from "lodash/get";
+import get from 'lodash/get';
 
 const headers = {
-  referrer: "https://tinder.com/",
-  referrerPolicy: "origin",
-  accept: "application/json; charset=UTF-8",
-  "persistent-device-id": localStorage.getItem("TinderWeb/uuid"),
-  platform: "web",
-  "X-Auth-Token": localStorage.getItem("TinderWeb/APIToken"),
+  referrer: 'https://tinder.com/',
+  referrerPolicy: 'origin',
+  accept: 'application/json; charset=UTF-8',
+  'persistent-device-id': localStorage.getItem('TinderWeb/uuid'),
+  platform: 'web',
+  'X-Auth-Token': localStorage.getItem('TinderWeb/APIToken')
 };
 
 const defaultOptions = {
   headers,
-  method: "GET",
+  method: 'GET'
 };
 
 function fetchResource(url, body = false) {
   return new Promise((resolve, reject) => {
-    let options = defaultOptions;
+    const options = defaultOptions;
     if (body) {
-      options.headers["content-type"] = "application/json";
+      options.headers['content-type'] = 'application/json';
       options.body = JSON.stringify(body);
-      options.method = "POST";
+      options.method = 'POST';
     }
     chrome.runtime.sendMessage({ url, options }, (messageResponse) => {
       const [response, error] = messageResponse;
@@ -32,7 +32,7 @@ function fetchResource(url, body = false) {
         resolve(
           new Response(body, {
             status: response.status,
-            statusText: response.statusText,
+            statusText: response.statusText
           })
         );
       }
@@ -53,7 +53,7 @@ const getMatches = async (newOnly, nextPageToken) => {
   return fetchResource(
     `https://api.gotinder.com/v2/matches?count=100&is_tinder_u=true&locale=en&message=${
       newOnly ? 0 : 1
-    }${typeof nextPageToken === "string" ? `&page_token=${nextPageToken}` : ""}`
+    }${typeof nextPageToken === 'string' ? `&page_token=${nextPageToken}` : ''}`
   );
 };
 
@@ -63,21 +63,19 @@ const getMyProfile = () =>
   );
 
 const getMessagesForMatch = ({ id }) =>
-  fetchResource(
-    `https://api.gotinder.com/v2/matches/${id}/messages?count=100`
-  ).then((data) =>
-    get(data, "data.messages", []).map((r) =>
-      get(r, "message", "")
+  fetchResource(`https://api.gotinder.com/v2/matches/${id}/messages?count=100`).then((data) =>
+    get(data, 'data.messages', []).map((r) =>
+      get(r, 'message', '')
         .trim()
         .toLowerCase()
-        .replace(/[^a-zA-Z0-9]+/g, "-")
-        .replace("thanks", "thank")
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace('thanks', 'thank')
     )
   );
 
 const sendMessageToMatch = (matchID, message) =>
   fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, {
-    message,
+    message
   });
 
 export { sendMessageToMatch, getMessagesForMatch, getMatches, getMyProfile };

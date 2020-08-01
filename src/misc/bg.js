@@ -6,9 +6,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           {
             body: text,
             status: response.status,
-            statusText: response.statusText,
+            statusText: response.statusText
           },
-          null,
+          null
         ]);
       });
     },

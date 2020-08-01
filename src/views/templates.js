@@ -15,12 +15,7 @@ const topBanner = `
 const titleGenerator = (title) =>
   `<h2 class="C($c-pink)--ml C($c-secondary)--s Pend(12px)--s Py(8px) Px(16px) Lts($ls-s) Tt(u) M(0) Fz($xs) Fw($semibold)">${title}</h2>`;
 
-const textboxGenerator = ({
-  className,
-  placeholder,
-  helpText,
-  defaultValue,
-}) => `
+const textboxGenerator = ({ className, placeholder, helpText, defaultValue }) => `
 <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
     <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
         <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
@@ -37,7 +32,7 @@ ${
 }
 `;
 
-const checkboxGenerator = (className, label, helpText = "") => `
+const checkboxGenerator = (className, label, helpText = '') => `
 <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
     <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
         <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
@@ -63,42 +58,40 @@ ${
 
 const autopilot = `
     <div class="Mt(20px)--ml Mt(16px)--s">
-        ${titleGenerator("Main Settings")}
+        ${titleGenerator('Main Settings')}
         ${checkboxGenerator(
-          "infoBannerActions",
-          "Auto like",
-          "Begin automatically swiping right on all profiles."
+          'infoBannerActions',
+          'Auto like',
+          'Begin automatically swiping right on all profiles.'
         )}
         ${checkboxGenerator(
-          "infoBannerActionsHideMine",
-          "Only show unanswered messages",
-          "Useful if you just sent an auto message to a ton of people and only want to see the ones that responded."
+          'infoBannerActionsHideMine',
+          'Only show unanswered messages',
+          'Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.'
         )}
         ${checkboxGenerator(
-          "infoBannerActionsAnonymous",
-          "Anonymous Mode",
-          "Hide profile pictures so you can take screenshots."
+          'infoBannerActionsAnonymous',
+          'Anonymous Mode',
+          'Hide profile pictures so you can take screenshots.'
         )}
   </div>
 `;
 
 const massMessage = `
 <div class="Mt(20px)--ml Mt(16px)--s">
-${titleGenerator("Messaging Settings")}
-${checkboxGenerator("infoBannerActionsMessage", "Auto message")}
-${checkboxGenerator("infoBannerActionsMessageNewOnly", "New matches only")}
+${titleGenerator('Messaging Settings')}
+${checkboxGenerator('infoBannerActionsMessage', 'Auto message')}
+${checkboxGenerator('infoBannerActionsMessageNewOnly', 'New matches only')}
 ${textboxGenerator({
-  helpText: "The message to send to matches.",
-  placeholder: "Your message to send",
-  className: "messageToSend",
-  defaultValue: defaultMessage,
+  helpText: 'The message to send to matches.',
+  placeholder: 'Your message to send',
+  className: 'messageToSend',
+  defaultValue: defaultMessage
 })}
 </div>
 `;
 
-const loggerHeader = `<div class="Mt(20px)--ml Mt(16px)--s">${titleGenerator(
-  "Activity"
-)}</div>`;
+const loggerHeader = `<div class="Mt(20px)--ml Mt(16px)--s">${titleGenerator('Activity')}</div>`;
 
 const counterLogs = (likeCount, matchCount) => `
 <div class="Mb(0) Mt(40px) D(f) Jc(sb) Flxb(50%) W(100%)">
@@ -139,5 +132,5 @@ export {
   loggerHeader,
   counterLogs,
   offToggle,
-  onToggle,
+  onToggle
 };

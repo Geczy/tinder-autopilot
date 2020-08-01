@@ -1,8 +1,9 @@
-import { logger, generateRandomNumber } from "../misc/helper";
-import Interactions from "../misc/Interactions";
+import { logger, generateRandomNumber } from '../misc/helper';
+import Interactions from '../misc/Interactions';
 
 class Swiper {
-  selector = ".infoBannerActions";
+  selector = '.infoBannerActions';
+
   isRunning = false;
 
   constructor() {
@@ -10,20 +11,19 @@ class Swiper {
   }
 
   start = () => {
-    logger("Starting to swipe using a randomized interval");
+    logger('Starting to swipe using a randomized interval');
     this.isRunning = true;
     this.run();
   };
 
   stop = () => {
     this.isRunning = false;
-    logger("Autopilot stopped ⛔️");
+    logger('Autopilot stopped ⛔️');
   };
 
   canSwipe = () => {
     return (
-      document.querySelectorAll(".recCard").length > 0 &&
-      !document.querySelector(".beacon__circle")
+      document.querySelectorAll('.recCard').length > 0 && !document.querySelector('.beacon__circle')
     );
   };
 
@@ -36,22 +36,22 @@ class Swiper {
     }
 
     likeButton.click();
-    document.getElementById("likeCount").innerHTML =
-      parseInt(document.getElementById("likeCount").innerHTML, 10) + 1;
+    document.getElementById('likeCount').innerHTML =
+      parseInt(document.getElementById('likeCount').innerHTML, 10) + 1;
     return true;
   };
 
   matchFound = () => {
-    const found = document.querySelectorAll(".itsAMatch");
+    const found = document.querySelectorAll('.itsAMatch');
 
     if (!found || !found.length) {
       return false;
     }
 
-    document.getElementById("matchCount").innerHTML =
-      parseInt(document.getElementById("matchCount").innerHTML, 10) + 1;
+    document.getElementById('matchCount').innerHTML =
+      parseInt(document.getElementById('matchCount').innerHTML, 10) + 1;
     logger("Congrats! We've got a match! 🤡");
-    document.querySelectorAll(".itsAMatch a")[0].click();
+    document.querySelectorAll('.itsAMatch a')[0].click();
     return true;
   };
 
@@ -62,7 +62,7 @@ class Swiper {
 
     // Must be on matches page
     if (!this.interactions.isOnMatchesPage()) {
-      logger("Going to main page to start liking");
+      logger('Going to main page to start liking');
       this.interactions.goToMainPage();
 
       const waitForMatchPage = setInterval(() => {
@@ -78,7 +78,7 @@ class Swiper {
     }
 
     if (!this.canSwipe()) {
-      logger("Waiting for photos...");
+      logger('Waiting for photos...');
       return setTimeout(this.run, generateRandomNumber());
     }
 
@@ -92,7 +92,7 @@ class Swiper {
       return setTimeout(this.run, generateRandomNumber(500, 900));
     }
 
-    logger("No profiles found. Waiting 4s");
+    logger('No profiles found. Waiting 4s');
     return setTimeout(this.run, generateRandomNumber(3000, 4000));
   };
 }
