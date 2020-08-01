@@ -1,6 +1,7 @@
-import { logger } from "./helper";
+import { logger } from "../misc/helper";
 
 class HideUnanswered {
+  selector = ".infoBannerActionsHideMine";
   totalMessages = 0;
   counter = 0;
 

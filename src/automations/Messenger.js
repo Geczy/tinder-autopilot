@@ -1,10 +1,16 @@
 import get from "lodash/get";
 import keyBy from "lodash/keyBy";
-import { sendMessageToMatch, getMessagesForMatch, getMatches } from "./api";
-import { randomDelay, logger } from "./helper";
-import { onToggle } from "./templates";
+import {
+  sendMessageToMatch,
+  getMessagesForMatch,
+  getMatches,
+} from "../misc/api";
+import { randomDelay, logger } from "../misc/helper";
+import { getCheckboxValue, toggleCheckbox } from "../views/Sidebar";
 
 class Messenger {
+  selector = ".infoBannerActionsMessage";
+  newSelector = ".infoBannerActionsMessageNewOnly";
   nextPageToken;
   isRunningMessage;
   allMatches = [];
@@ -12,9 +18,7 @@ class Messenger {
 
   loopMatches = async () => {
     const response = await getMatches(
-      document.querySelector(
-        ".infoBannerActionsMessageNewOnly .toggleSwitch__empty"
-      ).className === onToggle,
+      getCheckboxValue(this.newSelector),
       this.nextPageToken
     );
     this.nextPageToken = get(response, "data.next_page_token");
@@ -33,8 +37,11 @@ class Messenger {
   };
 
   stop = () => {
-    logger("Messaging stopped ⛔️");
-    this.isRunningMessage = false;
+    setTimeout(() => {
+      logger("Messaging stopped ⛔️");
+      this.isRunningMessage = false;
+      toggleCheckbox(this.selector);
+    }, 500);
   };
 
   runMessage = async () => {
@@ -66,7 +73,7 @@ class Messenger {
         document.getElementById("messageToSend"),
         "value",
         ""
-      ).replace("{name}", get(match, "person.name"));
+      ).replace("{name}", get(match, "person.name").toLowerCase());
 
       const messageToSendL = messageToSend
         .trim()

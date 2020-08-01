@@ -46,7 +46,7 @@ const checkboxGenerator = (className, label, helpText = "") => `
                     <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>${label}</span></div>
                     <div class="Py(14px)">
                         <div class="toggleSwitch Cur(p) Pe(n)">
-                            <input class="toggleSwitch__input D(n)" name="discoverable" type="checkbox">
+                            <input class="toggleSwitch__input D(n)" name="${className}" type="checkbox">
                             <div class="${offToggle}"></div>
                         </div>
                     </div>

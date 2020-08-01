@@ -4,8 +4,8 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "manifest.json", to: "manifest.json" },
-        { from: "src/bg.js", to: "bg.js" },
+        { from: "chrome/manifest.json", to: "manifest.json" },
+        { from: "src/misc/bg.js", to: "bg.js" },
       ],
     }),
   ],

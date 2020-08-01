@@ -8,10 +8,10 @@ import {
   loggerHeader,
   counterLogs,
 } from "./templates";
-import Messenger from "./Messenger";
-import Swiper from "./Swiper";
-import HideUnanswered from "./HideUnanswered";
-import { waitUntilElementExists } from "./helper";
+import Messenger from "../automations/Messenger";
+import Swiper from "../automations/Swiper";
+import HideUnanswered from "../automations/HideUnanswered";
+import { waitUntilElementExists } from "../misc/helper";
 
 class Sidebar {
   constructor() {
@@ -25,21 +25,6 @@ class Sidebar {
 
   insertBefore = (el, referenceNode) => {
     referenceNode.parentNode.insertBefore(el, referenceNode);
-  };
-
-  toggleCheckbox = (selector, onCb = false, offCb = false) => {
-    document.querySelector(selector).onclick = (e) => {
-      e.preventDefault();
-
-      const toggleStatus = document.querySelector(
-        `${selector} .toggleSwitch__empty`
-      );
-      const className = toggleStatus.className;
-      const isOn = className === onToggle;
-      toggleStatus.className = isOn ? offToggle : onToggle;
-      if (isOn && offCb) offCb();
-      if (!isOn && onCb) onCb();
-    };
   };
 
   sidebar = () => {
@@ -74,30 +59,52 @@ class Sidebar {
         .click();
     });
 
-    this.toggleCheckbox(
-      ".infoBannerActions",
+    this.bindCheckbox(".infoBannerActionsAnonymous");
+
+    this.bindCheckbox(this.messenger.newSelector);
+
+    this.bindCheckbox(
+      this.swiper.selector,
       this.swiper.start,
       this.swiper.stop
     );
 
-    this.toggleCheckbox(
-      ".infoBannerActionsMessage",
+    this.bindCheckbox(
+      this.messenger.selector,
       this.messenger.start,
       this.messenger.stop
     );
 
-    this.toggleCheckbox(
-      ".infoBannerActionsHideMine",
+    this.bindCheckbox(
+      this.hideUnanswered.selector,
       this.hideUnanswered.start,
       this.hideUnanswered.stop
     );
-
-    this.toggleCheckbox(".infoBannerActionsMessageNewOnly");
   };
 
-  static getCheckboxValue = (selector) => {
-    return document.querySelector(selector).className === onToggle;
+  bindCheckbox = (selector, start = false, stop = false) => {
+    document.querySelector(selector).onclick = (e) => {
+      e.preventDefault();
+
+      const isOn = getCheckboxValue(selector);
+      toggleCheckbox(selector);
+      if (isOn && stop) stop();
+      if (!isOn && start) start();
+    };
   };
 }
+
+const getCheckboxValue = (selector) =>
+  document.querySelector(`${selector} .toggleSwitch > div`).className ===
+  onToggle;
+
+const toggleCheckbox = (selector) => {
+  const isOn = getCheckboxValue(selector);
+  document.querySelector(`${selector} .toggleSwitch > div`).className = isOn
+    ? offToggle
+    : onToggle;
+};
+
+export { getCheckboxValue, toggleCheckbox };
 
 export default Sidebar;

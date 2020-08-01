@@ -1,13 +1,10 @@
-import { generateRandomNumber, logger } from "./helper";
-import Interactions from "./Interactions";
-import Sidebar from "./Sidebar";
-import { getMyProfile } from "./api";
+import { logger } from "./misc/helper";
+import Sidebar from "./views/Sidebar";
+import { getMyProfile } from "./misc/api";
 
 class TinderAssistant {
   constructor() {
-    getMyProfile().then((profileData) => {
-      this.profileData = profileData;
-    });
+    getMyProfile().then((profileData) => {});
 
     new Sidebar();
     logger("Welcome to Tinder Autopilot");

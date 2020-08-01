@@ -1,12 +1,8 @@
-import get from "lodash/get";
-import keyBy from "lodash/keyBy";
-import { sendMessageToMatch, getMessagesForMatch, getMatches } from "./api";
-import { randomDelay, logger, generateRandomNumber } from "./helper";
-import { onToggle, offToggle } from "./templates";
-import Sidebar from "./Sidebar";
-import Interactions from "./Interactions";
+import { logger, generateRandomNumber } from "../misc/helper";
+import Interactions from "../misc/Interactions";
 
 class Swiper {
+  selector = ".infoBannerActions";
   isRunning = false;
 
   constructor() {
@@ -22,6 +18,41 @@ class Swiper {
   stop = () => {
     this.isRunning = false;
     logger("Autopilot stopped ⛔️");
+  };
+
+  canSwipe = () => {
+    return (
+      document.querySelectorAll(".recCard").length > 0 &&
+      !document.querySelector(".beacon__circle")
+    );
+  };
+
+  hasLike = () => document.querySelector('[aria-label="Like"]');
+
+  pressLike = () => {
+    const likeButton = this.hasLike();
+    if (!likeButton && !this.canSwipe()) {
+      return false;
+    }
+
+    likeButton.click();
+    document.getElementById("likeCount").innerHTML =
+      parseInt(document.getElementById("likeCount").innerHTML, 10) + 1;
+    return true;
+  };
+
+  matchFound = () => {
+    const found = document.querySelectorAll(".itsAMatch");
+
+    if (!found || !found.length) {
+      return false;
+    }
+
+    document.getElementById("matchCount").innerHTML =
+      parseInt(document.getElementById("matchCount").innerHTML, 10) + 1;
+    logger("Congrats! We've got a match! 🤡");
+    document.querySelectorAll(".itsAMatch a")[0].click();
+    return true;
   };
 
   run = () => {
@@ -46,18 +77,18 @@ class Swiper {
       return;
     }
 
-    if (!this.interactions.canSwipe()) {
+    if (!this.canSwipe()) {
       logger("Waiting for photos...");
       return setTimeout(this.run, generateRandomNumber());
     }
 
     // Keep Swiping
-    if (this.interactions.matchFound()) {
+    if (this.matchFound()) {
       return setTimeout(this.run, generateRandomNumber(3000, 4000));
     }
 
     // What we came here to do, swipe right!
-    if (this.interactions.pressLike()) {
+    if (this.pressLike()) {
       return setTimeout(this.run, generateRandomNumber(500, 900));
     }
 

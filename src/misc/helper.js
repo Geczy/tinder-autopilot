@@ -24,7 +24,7 @@ const waitUntilElementExists = (selector, callback) => {
   if (el) {
     callback(el);
   }
-  setTimeout(() => this.waitUntilElementExists(selector, callback), 500);
+  setTimeout(() => waitUntilElementExists(selector, callback), 500);
 };
 
 export { logger, randomDelay, generateRandomNumber, waitUntilElementExists };
