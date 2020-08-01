@@ -11,10 +11,12 @@ import {
 import Messenger from '../automations/Messenger';
 import Swiper from '../automations/Swiper';
 import HideUnanswered from '../automations/HideUnanswered';
+import Anonymous from '../automations/Anonymous';
 import { waitUntilElementExists } from '../misc/helper';
 
 class Sidebar {
   constructor() {
+    this.anonymous = new Anonymous();
     this.hideUnanswered = new HideUnanswered();
     this.swiper = new Swiper();
     this.messenger = new Messenger();
@@ -53,7 +55,7 @@ class Sidebar {
       document.querySelector('.modal-slide-up div button[type="button"]').click();
     });
 
-    this.bindCheckbox('.tinderAutopilotAnonymous');
+    this.bindCheckbox(this.anonymous.selector, this.anonymous.start, this.anonymous.stop);
 
     this.bindCheckbox(this.messenger.newSelector);
 
