@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Don't waste time swiping. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
@@ -27,7 +27,7 @@
     },
     "github": {
       "assets": [
-        "release-${version}.tar.gz"
+        "release-*.tar.gz"
       ],
       "release": true
     }
