@@ -6,3 +6,4 @@ gen
 node_modules
 yarn-error.log
 dist
+.env

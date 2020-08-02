@@ -6,8 +6,28 @@
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
   "author": "Matt Gates <info@mgates.me>",
   "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.19"
+  "scripts": {
+    "release": "dotenv release-it",
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "ver": "print process.env.npm_package_version"
+  },
+  "release-it": {
+    "npm": {
+      "publish": false
+    },
+    "hooks": {
+      "after:bump": [
+        "yarn build",
+        "ver=$(node -p \"require('./package.json').version\");tar -zcvf \"release-$ver.tar.gz\" dist"
+      ]
+    },
+    "github": {
+      "assets": [
+        "release.tar.gz"
+      ],
+      "release": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
@@ -17,6 +37,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.0.3",
+    "dotenv-cli": "^3.2.0",
     "eslint": "^7.6.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -26,7 +47,9 @@
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "4.0.0",
     "invariant": "^2.2.4",
+    "lodash": "^4.17.19",
     "prettier": "^2.0.5",
+    "release-it": "^13.6.6",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
@@ -35,9 +58,5 @@
     "not IE 11",
     "not IE_Mob 11",
     "maintained node versions"
-  ],
-  "scripts": {
-    "start": "webpack --mode development --watch",
-    "build": "webpack --mode production"
-  }
+  ]
 }
