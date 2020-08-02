@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.0.0",
+  "version": "2.0.5",
   "description": "Don't waste time swiping. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
@@ -19,8 +19,11 @@
     "hooks": {
       "after:bump": [
         "yarn build",
-        "ver=$(node -p \"require('./package.json').version\");tar -zcvf \"release-$ver.tar.gz\" dist"
+        "tar -zcvf release-${version}.tar.gz dist"
       ]
+    },
+    "git": {
+      "requireCleanWorkingDir": false
     },
     "github": {
       "assets": [
