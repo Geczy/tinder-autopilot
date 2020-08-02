@@ -84,8 +84,8 @@ class Messenger {
           })
           .then((shouldSend) => {
             if (shouldSend) {
-              sendMessageToMatch(match.id, messageToSend).then((r) => {
-                if (get(r, 'sent_date')) {
+              sendMessageToMatch(match.id, { message: messageToSend }).then((b) => {
+                if (get(b, 'sent_date')) {
                   logger(`Message sent to ${get(match, 'person.name')}`);
                 }
               });

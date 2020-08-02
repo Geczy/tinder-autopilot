@@ -16,12 +16,13 @@ import { waitUntilElementExists } from '../misc/helper';
 
 class Sidebar {
   constructor() {
+    this.sidebar();
+
     this.anonymous = new Anonymous();
     this.hideUnanswered = new HideUnanswered();
     this.swiper = new Swiper();
     this.messenger = new Messenger();
 
-    this.sidebar();
     this.events();
   }
 
@@ -68,6 +69,10 @@ class Sidebar {
       this.hideUnanswered.start,
       this.hideUnanswered.stop
     );
+
+    document.getElementById('messageToSend').addEventListener('blur', (e) => {
+      localStorage.setItem('TinderAutopilot/MessengerDefault', JSON.stringify(e.target.value));
+    });
   };
 
   bindCheckbox = (selector, start = false, stop = false) => {

@@ -1,4 +1,11 @@
-const defaultMessage = `Hey {name}, this is an automated message to remind you of your upcoming "Netflix and Chill" appointment in the next week. To confirm your appointment text YES DADDY. To unsubscribe, please text WRONG HOLE. Standard text and bill rates do apply. Thanks for choosing Slide N Yo DMs`;
+let defaultMessage = `Hey {name}, this is an automated message to remind you of your upcoming "Netflix and Chill" appointment in the next week. To confirm your appointment text YES DADDY. To unsubscribe, please text WRONG HOLE. Standard text and bill rates do apply. Thanks for choosing Slide N Yo DMs`;
+
+const msg = JSON.parse(localStorage.getItem('TinderAutopilot/MessengerDefault'));
+if (msg) {
+  defaultMessage = msg;
+} else {
+  localStorage.setItem('TinderAutopilot/MessengerDefault', JSON.stringify(defaultMessage));
+}
 
 const onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-pink) Bg($c-pink) Bdc($c-pink)::a TranslateX(20px)::a`;
 
