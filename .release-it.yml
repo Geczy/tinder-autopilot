@@ -1,0 +1,15 @@
+npm:
+  publish: false
+hooks:
+  after:bump:
+    - rm -f dist/tinder-autopilot-v*.zip
+    - echo "$( jq '.version = "${version}"' chrome/manifest.json )" > chrome/manifest.json
+    - yarn build
+    - cd dist/ && bestzip tinder-autopilot-v${version}.zip * && cd ..
+  after:release: rm dist/tinder-autopilot-v*.zip
+git:
+  requireCleanWorkingDir: false
+github:
+  assets:
+    - dist/tinder-autopilot-v*.zip
+  release: true
