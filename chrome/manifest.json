@@ -1,1 +1,25 @@
-"$( jq ".version = \"2.3.1\"" chrome/manifest.json )" 
+{
+  "author": "Matthew <info@mgates.me>",
+  "background": {
+    "scripts": [
+      "bg.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "main.js"
+      ],
+      "matches": [
+        "https://tinder.com/*",
+        "https://*.gotinder.com/*"
+      ]
+    }
+  ],
+  "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
+  "manifest_version": 2,
+  "name": "Autopilot for Tinder",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "2.3.3"
+}
