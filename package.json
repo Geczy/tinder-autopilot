@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
@@ -9,6 +9,7 @@
   "scripts": {
     "major": "dotenv release-it -- major --ci",
     "minor": "dotenv release-it -- minor --ci",
+    "patch": "dotenv release-it -- patch --ci",
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },
@@ -19,16 +20,16 @@
     "hooks": {
       "after:bump": [
         "yarn build",
-        "tar -acf release-${version}.zip dist --transform s/dist/tinder-autopilot-v${version}/"
+        "tar -acf tinder-autopilot-v${version}.zip dist --transform s/dist/tinder-autopilot-v${version}/"
       ],
-      "after:release": "rm release-*.zip"
+      "after:release": "rm tinder-autopilot-v*.zip"
     },
     "git": {
       "requireCleanWorkingDir": false
     },
     "github": {
       "assets": [
-        "release-*.zip"
+        "tinder-autopilot-v*.zip"
       ],
       "release": true
     }
