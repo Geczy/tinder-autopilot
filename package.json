@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
@@ -20,8 +20,9 @@
     "hooks": {
       "after:bump": [
         "rm -f dist/tinder-autopilot-v*.zip",
+        "echo \"$( jq '.version = \"${version}\"' chrome/manifest.json )\" > chrome/manifest.json",
         "yarn build",
-        "cd dist && tar -acf tinder-autopilot-v${version}.zip * && cd .."
+        "cd dist/ && bestzip tinder-autopilot-v${version}.zip * && cd .."
       ],
       "after:release": "rm dist/tinder-autopilot-v*.zip"
     },
@@ -42,6 +43,7 @@
     "@babel/runtime": "^7.11.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "bestzip": "^2.1.6",
     "copy-webpack-plugin": "^6.0.3",
     "dotenv-cli": "^3.2.0",
     "eslint": "^7.6.0",
