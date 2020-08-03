@@ -1,16 +1,16 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.0.8",
-  "description": "Don't waste time swiping. Autopilot will do it for you.",
+  "version": "2.1.0",
+  "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
-  "author": "Matt Gates <info@mgates.me>",
+  "author": "Matthew <info@mgates.me>",
   "license": "MIT",
   "scripts": {
-    "release": "dotenv release-it",
+    "major": "dotenv release-it -- major --ci",
+    "minor": "dotenv release-it -- minor --ci",
     "start": "webpack --mode development --watch",
-    "build": "webpack --mode production",
-    "ver": "print process.env.npm_package_version"
+    "build": "webpack --mode production"
   },
   "release-it": {
     "npm": {
@@ -19,16 +19,16 @@
     "hooks": {
       "after:bump": [
         "yarn build",
-        "tar -zcvf release-${version}.tar.gz dist"
+        "tar -acf release-${version}.zip dist --transform s/dist/tinder-autopilot-v${version}/"
       ],
-      "after:release": "rm release-*.tar.gz"
+      "after:release": "rm release-*.zip"
     },
     "git": {
       "requireCleanWorkingDir": false
     },
     "github": {
       "assets": [
-        "release-*.tar.gz"
+        "release-*.zip"
       ],
       "release": true
     }
