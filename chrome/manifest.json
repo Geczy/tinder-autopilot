@@ -1,1 +1,1 @@
-'$( jq '.version = "2.2.8" chrome/manifest.json )' 
+"$( jq '.version = "2.2.9"' chrome/manifest.json )" 
