@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
@@ -21,7 +21,7 @@
       "after:bump": [
         "rm -f dist/tinder-autopilot-v*.zip",
         "yarn build",
-        "cd dist && tar -azcf tinder-autopilot-v${version}.zip * && cd .."
+        "cd dist && tar -acf tinder-autopilot-v${version}.zip * && cd .."
       ],
       "after:release": "rm dist/tinder-autopilot-v*.zip"
     },
