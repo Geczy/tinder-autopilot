@@ -1,5 +1,18 @@
 {
-  "author": "Matthew <info@mgates.me>",
+  "name": "Autopilot for Tinder",
+  "short_name": "Tinder Auto",
+  "homepage_url": "https://github.com/Geczy/tinder-autopilot/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
+  "manifest_version": 2,
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "2.3.3",
+  "author": "A Lonely Coder",
   "background": {
     "scripts": [
       "bg.js"
@@ -16,10 +29,5 @@
         "https://*.gotinder.com/*"
       ]
     }
-  ],
-  "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
-  "manifest_version": 2,
-  "name": "Autopilot for Tinder",
-  "update_url": "https://clients2.google.com/service/update2/crx",
-  "version": "2.3.3"
+  ]
 }
