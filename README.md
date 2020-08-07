@@ -6,6 +6,8 @@ Tinder Autopilot 🔥
 
 >Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.
 
+[Install on the Chrome Web Store](https://chrome.google.com/webstore/detail/autopilot-for-tinder/bfpgbjekakfijondlfloonhdkcjlhehg?hl=en)
+
 <p align="center">
     <img src="https://i.imgur.com/wz8fHwG.png" alt="product demo">
 </p>
