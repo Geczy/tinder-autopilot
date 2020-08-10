@@ -45,8 +45,8 @@ Contributions are what make the open source community such an amazing place to b
 
 ## Author
 
-👤 **Matthew <info@mgates.me>**
+👤 **A Lonely Coder <hashtagnogf@protonmail.com>**
 
 ## Show your support
 
-Give a ⭐️ if this project helped you!
+Give a ⭐️ if this project helped you! Maybe even a sponsorship 😍
