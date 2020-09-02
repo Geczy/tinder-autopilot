@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.11.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
-    "bestzip": "^2.1.6",
+    "bestzip": "^2.1.7",
     "copy-webpack-plugin": "^6.0.3",
     "dotenv-cli": "^3.2.0",
     "eslint": "^7.6.0",
