@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import { logger } from './misc/helper';
 import Sidebar from './views/Sidebar';
 import { getMyProfile } from './misc/api';
-import Instagram from "./automations/Instagram";
+import Instagram from './automations/Instagram';
 
 class TinderAssistant {
   boostRemaining = false;
