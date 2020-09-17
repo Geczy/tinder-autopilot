@@ -51,7 +51,7 @@ class Swiper {
     document.getElementById('matchCount').innerHTML =
       parseInt(document.getElementById('matchCount').innerHTML, 10) + 1;
     logger("Congrats! We've got a match! 🤡");
-    document.querySelector('.itsAMatch button').click();
+    document.querySelector('.itsAMatch > div > button').click();
     return true;
   };
 
