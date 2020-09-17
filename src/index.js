@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import { logger } from './misc/helper';
 import Sidebar from './views/Sidebar';
 import { getMyProfile } from './misc/api';
+import Instagram from './automations/Instagram';
 
 class TinderAssistant {
   boostRemaining = false;
@@ -23,6 +24,7 @@ class TinderAssistant {
       localStorage.setItem('TinderAutopilot/ProfileData', JSON.stringify(profileData));
 
       new Sidebar();
+      new Instagram();
       logger('Welcome to Tinder Autopilot');
     });
   }

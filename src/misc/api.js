@@ -14,7 +14,7 @@ const defaultOptions = {
   method: 'GET'
 };
 
-function fetchResource(url, body = false) {
+const fetchResource = (url, body = false) => {
   return new Promise((resolve, reject) => {
     const options = defaultOptions;
     if (body) {
@@ -110,4 +110,4 @@ const sendMessageToMatch = (matchID, options) => {
   return fetchResource(`https://api.gotinder.com/user/matches/${matchID}?locale=en`, body);
 };
 
-export { sendMessageToMatch, getMessagesForMatch, getMatches, getMyProfile };
+export { fetchResource, sendMessageToMatch, getMessagesForMatch, getMatches, getMyProfile };
