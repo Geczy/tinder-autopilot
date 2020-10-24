@@ -23,7 +23,8 @@ class Swiper {
 
   canSwipe = () => {
     return (
-      document.querySelectorAll('.recCard').length > 0 && !document.querySelector('.beacon__circle')
+      document.querySelectorAll('div[itemtype*="Person"]').length > 0 &&
+      !document.querySelector('.beacon__circle')
     );
   };
 
