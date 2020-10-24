@@ -6,7 +6,9 @@ import {
   infoBanner,
   massMessage,
   loggerHeader,
-  counterLogs
+  counterLogs,
+  offToggleInner,
+  onToggleInner
 } from './templates';
 import Messenger from '../automations/Messenger';
 import Swiper from '../automations/Swiper';
@@ -93,6 +95,9 @@ const getCheckboxValue = (selector) =>
 const toggleCheckbox = (selector) => {
   const isOn = getCheckboxValue(selector);
   document.querySelector(`${selector} .toggleSwitch > div`).className = isOn ? offToggle : onToggle;
+  document.querySelector(`${selector} .toggleSwitch > div > div`).className = isOn
+    ? offToggleInner
+    : onToggleInner;
 };
 
 export { getCheckboxValue, toggleCheckbox };

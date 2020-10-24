@@ -7,9 +7,11 @@ if (msg) {
   localStorage.setItem('TinderAutopilot/MessengerDefault', JSON.stringify(defaultMessage));
 }
 
-const onToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-pink) Bg($c-pink) Bdc($c-pink)::a TranslateX(20px)::a`;
+const onToggle = `CenterAlign Bdrs(16px) W(50px) H(30px) Bd Pe(n) Trstf(eio) Trsdu($fast) Bdc($c-pink) Bg($c-pink)`;
+const onToggleInner = `Bdrs(50%) Bgc(#fff) Bd Sq(28px) Trstf(eio) Trsdu($fast) Bdc($c-pink) TranslateX(10px)`;
 
-const offToggle = `toggleSwitch__empty Pos(r) Bdrs(15px) Bd Cnt($blank)::a Bdrs(50%)::a Bgc(#fff)::a D(b)::a Bdc($c-divider)::a Bd::a Trstf(eio) Trsdu($fast) Trstf(eio)::a Trsdu($fast)::a W(50px) H(30px) Sq(28px)::a Bdc($c-disabled) Bgc($c-bg)`;
+const offToggle = `CenterAlign Bdrs(16px) W(50px) H(30px) Bd Pe(n) Trstf(eio) Trsdu($fast) Bdc($c-divider) Bgc($c-divider)`;
+const offToggleInner = `Bdrs(50%) Bgc(#fff) Bd Sq(28px) Trstf(eio) Trsdu($fast) Bdc($c-divider) TranslateX(-10px)`;
 
 const topBanner = `
 <div class="desktopNavbar Pos(r) Z(2) Trsdu($normal) Tsrdu($regular) CenterAlign Bg($blue-gradient)">
@@ -25,7 +27,7 @@ const titleGenerator = (title) =>
 const textboxGenerator = ({ className, placeholder, helpText, defaultValue }) => `
 <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
     <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-        <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+        <label class="Maw(80%) Ov(h) Tov(e) Py(12px) Cur(p)">
             <div class="D(f) Jc(sb) Ai(c)"></div>
             <div class="menuItem__input Pos(r) W(100%) Cur(t)">
                 <textarea class="Expand D(b) Bd(0) Px(0) Py(15px)" id="${className}" placeholder="${placeholder}">${defaultValue}</textarea>
@@ -42,14 +44,14 @@ ${
 const checkboxGenerator = (className, label, helpText = '') => `
 <div class="settings__container settings__section Bgc(#fff) BdY Bdc($c-divider)">
     <div class="menuItem Bgc(#fff) Bd focus-visible_Bdc($c-superlike-blue) Bdc(t) Trsdu($fast)">
-        <label class="menuItem__contents Pos(r) Px(12px) Px(24px)--ml Py(0) M(0)--ml Mih(50px) settings__container_Px(16px) D(f) Jc(c) Fld(c) W(100%) Bgc(#fff) Cur(p)">
+        <label class="Maw(80%) Ov(h) Tov(e) Py(12px) Cur(p)">
             <a href="#" class="${className}" style="display: block" title="Click to toggle">
                 <div class="D(f) Jc(sb) Ai(c)">
-                    <div class="menuItem__text Ov(h) Tov(e) Py(14px)"><span>${label}</span></div>
-                    <div class="Py(14px)">
+                    <div class="Maw(80%) Ov(h) Tov(e) Py(12px) Cur(p)"><span>${label}</span></div>
+                    <div class="Pos(r)">
                         <div class="toggleSwitch Cur(p) Pe(n)">
-                            <input class="toggleSwitch__input D(n)" name="${className}" type="checkbox">
-                            <div class="${offToggle}"></div>
+                            <input class="Expand StretchedBox Op(0) Ap(n) Cur(p)" name="${className}" type="checkbox">
+                            <div class="${offToggle}"><div class="${offToggleInner}"></div></div>
                         </div>
                     </div>
                 </div>
@@ -139,5 +141,7 @@ export {
   loggerHeader,
   counterLogs,
   offToggle,
-  onToggle
+  offToggleInner,
+  onToggle,
+  onToggleInner
 };
