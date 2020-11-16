@@ -39,6 +39,18 @@ class Interactions {
       }
     } catch (e) {}
   };
+
+  closeSuperLike = (cb) => {
+    // "Upgrade your like" modal blocks us
+    try {
+      if (document.querySelector('#modal-manager [aria-label="⭐"]')) {
+        document.querySelector('#modal-manager button:nth-of-type(2)').click();
+        logger('Closing upgrade super like modal');
+        cb();
+        return true;
+      }
+    } catch (e) {}
+  };
 }
 
 export default Interactions;
