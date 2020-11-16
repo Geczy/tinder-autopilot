@@ -43,7 +43,7 @@ class Swiper {
   };
 
   matchFound = () => {
-    const found = document.querySelectorAll('.itsAMatch');
+    const found = document.querySelectorAll('button[aria-label="Close"]');
 
     if (!found || !found.length) {
       return false;
@@ -52,7 +52,7 @@ class Swiper {
     document.getElementById('matchCount').innerHTML =
       parseInt(document.getElementById('matchCount').innerHTML, 10) + 1;
     logger("Congrats! We've got a match! 🤡");
-    document.querySelector('.itsAMatch > div > button').click();
+    found.click();
     return true;
   };
 
@@ -75,6 +75,10 @@ class Swiper {
     }
 
     if (this.interactions.closeInstructions(this.run)) {
+      return;
+    }
+
+    if (this.interactions.closeSuperLike(this.run)) {
       return;
     }
 
