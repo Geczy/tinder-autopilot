@@ -6,10 +6,9 @@ hooks:
     - bash chrome/bump-version.sh ${version}
     - yarn build
     - cd dist/ && bestzip tinder-autopilot-v${version}.zip * && mv tinder-autopilot-v* ../zips/ && cd ..
-  after:release: rm zips/tinder-autopilot-v*.zip
 git:
   requireCleanWorkingDir: false
 github:
   assets:
-    - zips/tinder-autopilot-v*.zip
+    - zips/tinder-autopilot-v${version}.zip
   release: true
