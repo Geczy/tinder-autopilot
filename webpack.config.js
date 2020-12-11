@@ -20,5 +20,9 @@ module.exports = {
         }
       }
     ]
+  },
+  output: {
+    chunkLoading: false,
+    wasmLoading: false,
   }
 };
