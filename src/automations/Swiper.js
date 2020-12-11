@@ -28,7 +28,17 @@ class Swiper {
     );
   };
 
-  hasLike = () => document.querySelector('[aria-label="Like"]');
+  hasLike = () => {
+    const xpath = "//span[text()='Like']";
+    const matchingElement = document.evaluate(
+      xpath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
+    return matchingElement.closest('button');
+  };
 
   pressLike = () => {
     const likeButton = this.hasLike();
