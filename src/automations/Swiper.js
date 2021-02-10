@@ -55,7 +55,7 @@ class Swiper {
   matchFound = () => {
     const found = document.querySelectorAll('button[aria-label="Close"]');
 
-    if (!found || !found.length) {
+    if (typeof found?.click !== 'function') {
       return false;
     }
 
@@ -84,12 +84,12 @@ class Swiper {
       }, 100);
     }
 
-    if (this.interactions.closeInstructions(this.run)) {
-      return;
+    if (this.interactions.closeInstructions()) {
+      return setTimeout(this.run, generateRandomNumber());
     }
 
-    if (this.interactions.closeSuperLike(this.run)) {
-      return;
+    if (this.interactions.closeModal()) {
+      return setTimeout(this.run, generateRandomNumber());
     }
 
     if (!this.canSwipe()) {

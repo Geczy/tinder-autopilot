@@ -25,7 +25,7 @@ class Interactions {
     }
   };
 
-  closeInstructions = (cb) => {
+  closeInstructions = () => {
     // Homescreen modal blocks us
     try {
       if (document.querySelector('[data-testid="addToHomeScreen"]')) {
@@ -40,12 +40,12 @@ class Interactions {
     } catch (e) {}
   };
 
-  closeSuperLike = (cb) => {
-    // "Upgrade your like" modal blocks us
+  closeModal = () => {
     try {
-      if (document.querySelector('#modal-manager [aria-label="⭐"]')) {
-        document.querySelector('#modal-manager button:nth-of-type(2)').click();
-        logger('Closing upgrade super like modal');
+      const modal = document.querySelector('#modal-manager');
+      if (modal) {
+        document.querySelector('#modal-manager > div').click();
+        logger('Closing modal');
         cb();
         return true;
       }
