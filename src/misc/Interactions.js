@@ -34,10 +34,11 @@ class Interactions {
           .parentElement.querySelector('button:nth-of-type(2)')
           .click();
         logger('Closing add to homescreen modal');
-        cb();
         return true;
       }
-    } catch (e) {}
+    } catch (e) {
+      return false;
+    }
   };
 
   closeModal = () => {
@@ -46,10 +47,11 @@ class Interactions {
       if (modal) {
         document.querySelector('#modal-manager > div').click();
         logger('Closing modal');
-        cb();
         return true;
       }
-    } catch (e) {}
+    } catch (e) {
+      return false;
+    }
   };
 }
 
