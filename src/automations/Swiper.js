@@ -79,36 +79,41 @@ class Swiper {
       const waitForMatchPage = setInterval(() => {
         if (this.interactions.isOnMatchesPage()) {
           clearInterval(waitForMatchPage);
-          return setTimeout(this.run, generateRandomNumber());
+          setTimeout(this.run, generateRandomNumber());
         }
-      }, 100);
+      }, 250);
     }
 
     if (this.interactions.closeInstructions()) {
-      return setTimeout(this.run, generateRandomNumber());
+      setTimeout(this.run, generateRandomNumber());
+      return;
     }
 
     if (this.interactions.closeModal()) {
-      return setTimeout(this.run, generateRandomNumber());
+      setTimeout(this.run, generateRandomNumber());
+      return;
     }
 
     if (!this.canSwipe()) {
-      logger('Waiting for photos...');
-      return setTimeout(this.run, generateRandomNumber());
+      logger('No profiles found. Waiting 4s');
+      setTimeout(this.run, generateRandomNumber(3000, 4000));
+      return;
     }
 
     // Keep Swiping
     if (this.matchFound()) {
-      return setTimeout(this.run, generateRandomNumber(500, 900));
+      setTimeout(this.run, generateRandomNumber(500, 900));
+      return;
     }
 
     // What we came here to do, swipe right!
     if (this.pressLike()) {
-      return setTimeout(this.run, generateRandomNumber(500, 900));
+      setTimeout(this.run, generateRandomNumber(500, 900));
+      return;
     }
 
     logger('No profiles found. Waiting 4s');
-    return setTimeout(this.run, generateRandomNumber(3000, 4000));
+    setTimeout(this.run, generateRandomNumber(3000, 4000));
   };
 }
 

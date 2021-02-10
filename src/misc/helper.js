@@ -14,7 +14,7 @@ const logger = (v) => {
   const message = /* html */ `<p class="settings__bottomSubtitle Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)"><span>
   ${`0${now.getHours()}`.slice(-2)}:${`0${now.getMinutes()}`.slice(
     -2
-  )}:${`0${now.getSeconds()}`.slice(-2)}.</span> 
+  )}:${`0${now.getSeconds()}`.slice(-2)}.</span>
   ${v}</span></p>`;
   txt.innerHTML = message + txt.innerHTML;
 };

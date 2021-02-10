@@ -23,13 +23,13 @@ class TinderAssistant {
 
       localStorage.setItem('TinderAutopilot/ProfileData', JSON.stringify(profileData));
 
-      Sidebar();
-      Instagram();
+      const sidebar = new Sidebar();
+      const instagram = new Instagram();
       logger('Welcome to Tinder Autopilot');
     });
   }
 }
 
 setTimeout(() => {
-  TinderAssistant();
+  const Tinder = new TinderAssistant();
 }, 500);
