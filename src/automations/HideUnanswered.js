@@ -16,17 +16,20 @@ class HideUnanswered {
       .call(document.querySelectorAll('.messageListItem'))
       .filter((item) => item.style.display !== 'none').length;
 
+    // Scroll back to top of messages
+    document.querySelector('.matchListTitle').parentElement.scrollTop = 0;
+
     logger(`Total matches that need a response: ${unansweredCount}`);
   };
 
   scrollMatchesToEnd = (cb) => {
-    const currHeight = document.querySelector('#matchListWithMessages').scrollTop;
-    const totalHeight = document.querySelector('#matchListWithMessages').scrollHeight;
+    const currHeight = document.querySelector('.matchListTitle').parentElement.scrollTop;
+    const totalHeight = document.querySelector('.matchListTitle').parentElement.scrollHeight;
     const newTotal = document.querySelector('div.messageList').children.length;
 
     if (this.counter < 30 && currHeight < totalHeight) {
       this.counter += 1;
-      document.querySelector('#matchListWithMessages').scrollTop += window.outerHeight;
+      document.querySelector('.matchListTitle').parentElement.scrollTop += window.outerHeight;
       setTimeout(() => this.scrollMatchesToEnd(cb), 100);
     } else {
       logger(`Finished scrolling, total matches found: ${newTotal}`);
