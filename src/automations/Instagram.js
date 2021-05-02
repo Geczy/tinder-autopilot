@@ -1,25 +1,26 @@
 import { insertCss } from '../misc/insert-css';
 
 class Instagram {
-  modalSelector = '#modal-manager';
-
   imageSelector = `${this.modalSelector} div[style*="instagram"]`;
 
   observer;
 
   constructor() {
+    return;
     insertCss(`
     #modal-manager div[style*="instagram"] { cursor: zoom-in; }
-    #modal-manager div[style*="instagram"]:hover {  
+    #modal-manager div[style*="instagram"]:hover {
         border: 3px solid #40a9ff;
     }
     `);
 
-    const target = document.querySelector(this.modalSelector);
-    const observer = new MutationObserver(this.start);
-    observer.observe(target, { childList: true });
+    try {
+      const target = document.querySelector('[role="dialog"]').parentElement.parentElement;
+      const observer = new MutationObserver(this.start);
+      observer.observe(target, { childList: true });
 
-    this.observer = observer;
+      this.observer = observer;
+    } catch (e) {}
   }
 
   start = () => {
