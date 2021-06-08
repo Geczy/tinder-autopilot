@@ -22,10 +22,7 @@ class Swiper {
   };
 
   canSwipe = () => {
-    return (
-      document.querySelectorAll('div[itemtype*="Person"]').length > 0 &&
-      !document.querySelector('.beacon__circle')
-    );
+    return this.hasLike() && !document.querySelector('.beacon__circle');
   };
 
   hasLike = () => {
