@@ -1,6 +1,6 @@
 {
   "name": "tinder-autopilot",
-  "version": "2.7.16",
+  "version": "2.7.17",
   "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
   "main": "src/index.js",
   "repository": "https://github.com/Geczy/tinder-autopilot.git",
