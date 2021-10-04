@@ -45,7 +45,7 @@ class Interactions {
     try {
       const modal = document.querySelector('[title="Back to Tinder"]');
       if (modal) {
-        modal.parentElement.click();
+        modal.click();
         logger('Closing match found');
         return true;
       }
