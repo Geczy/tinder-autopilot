@@ -91,6 +91,11 @@ class Swiper {
       return;
     }
 
+    if (this.interactions.closeMatchFound()) {
+      setTimeout(this.run, generateRandomNumber());
+      return;
+    }
+
     if (!this.canSwipe()) {
       logger('No profiles found. Waiting 4s');
       setTimeout(this.run, generateRandomNumber(3000, 4000));

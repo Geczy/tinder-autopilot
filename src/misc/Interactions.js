@@ -41,6 +41,19 @@ class Interactions {
     }
   };
 
+  closeMatchFound = () => {
+    try {
+      const modal = document.querySelector('[title="Back to Tinder"]');
+      if (modal) {
+        modal.parentElement.click();
+        logger('Closing match found');
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+  };
+
   closeModal = () => {
     try {
       const modal = document.querySelector('[role="dialog"]').parentElement.parentElement;
