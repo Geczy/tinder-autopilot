@@ -13,20 +13,13 @@
   "version": "2.7.16",
   "author": "A Lonely Coder",
   "background": {
-    "scripts": [
-      "bg.js"
-    ],
+    "scripts": ["bg.js"],
     "persistent": false
   },
   "content_scripts": [
     {
-      "js": [
-        "main.js"
-      ],
-      "matches": [
-        "https://tinder.com/*",
-        "https://*.gotinder.com/*"
-      ]
+      "js": ["main.js"],
+      "matches": ["https://tinder.com/*", "https://*.gotinder.com/*"]
     }
   ]
 }

@@ -23,6 +23,7 @@ module.exports = {
   },
   output: {
     chunkLoading: false,
-    wasmLoading: false,
-  }
+    wasmLoading: false
+  },
+  target: ['web', 'es5']
 };

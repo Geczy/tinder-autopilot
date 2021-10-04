@@ -47,7 +47,7 @@ const fetchResource = (url, body = false) => {
     .catch((error) => {
       console.log(error);
     });
-}
+};
 
 const getMatches = async (newOnly, nextPageToken) => {
   return fetchResource(
