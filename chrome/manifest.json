@@ -8,16 +8,24 @@
     "128": "icons/icon128.png"
   },
   "description": "Don't waste any more time doing manual tasks on Tinder. Autopilot will do it for you.",
+  "manifest_version": 2,
+  "update_url": "https://clients2.google.com/service/update2/crx",
   "version": "3.0.0",
-  "manifest_version": 3,
+  "author": "A Lonely Coder",
+  "background": {
+    "scripts": [
+      "bg.js"
+    ],
+    "persistent": false
+  },
   "content_scripts": [
     {
+      "js": [
+        "main.js"
+      ],
       "matches": [
         "https://tinder.com/*",
         "https://*.gotinder.com/*"
-      ],
-      "js": [
-        "main.js"
       ]
     }
   ]

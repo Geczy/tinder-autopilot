@@ -6,41 +6,6 @@ class Swiper {
 
   isRunning = false;
 
-  run = () => {
-    if (!this.isRunning) {
-      return;
-    }
-
-    // Must be on matches page
-    if (!this.interactions.isOnMatchesPage()) {
-      logger('Going to main page to start liking');
-      this.interactions.goToMainPage();
-
-      const waitForMatchPage = setInterval(() => {
-        if (this.interactions.isOnMatchesPage()) {
-          clearInterval(waitForMatchPage);
-          setTimeout(this.run, generateRandomNumber());
-        }
-      }, 250);
-      return;
-    }
-
-    // Close instructions modal, if present
-    if (this.interactions.closeInstructions()) {
-      setTimeout(this.run, generateRandomNumber());
-      return;
-    }
-
-    // Close other modals, if present
-    if (this.interactions.closeModal() || this.interactions.closeMatchFound()) {
-      setTimeout(this.run, generateRandomNumber());
-      return;
-    }
-
-    // ...existing code...
-  };
-
-
   constructor() {
     this.interactions = new Interactions();
   }
