@@ -52,7 +52,7 @@ class Messenger {
     // this.allMatches = this.allMatches.reverse();
 
     logger(`Looking for matches we have not sent yet to`);
-    this.sendMessagesTo(this.allMatches);
+    this.sendMessagesTo(this.allMatches.reverse());
   };
 
   sendMessagesTo = async (r) => {
@@ -76,7 +76,7 @@ class Messenger {
         .replace('thanks', 'thank');
 
       pendingPromiseList.push(
-        getMessagesForMatch(match)
+        getMessagesForMatch(match.id)
           .then((messageList) => {
             this.checkedMessage += 1;
             logger(`Checked ${this.checkedMessage}/${this.allMatches.length}`);
@@ -94,7 +94,7 @@ class Messenger {
       );
     }
 
-    if (pendingPromiseList === []) {
+    if (pendingPromiseList.length === 0) {
       logger('No more matches to send message to');
       this.stop();
     } else {
