@@ -9,7 +9,14 @@ class HideUnanswered {
 
   finishHiding = () => {
     document.querySelectorAll('.messageListItem__message svg').forEach((t) => {
-      t.closest('.messageListItem').style.display = 'none';
+      const messageItem = t.closest('.messageListItem');
+      const checkmarkIcon = messageItem.querySelector('svg[aria-label="Message Sent"]');
+      const replyMessage = messageItem.querySelector('.messageListItem__message:last-child');
+
+      if (!checkmarkIcon && !replyMessage) {
+        // Hide the message item if it doesn't contain a checkmark icon and there is no reply message
+        messageItem.style.display = 'none';
+      }
     });
 
     const unansweredCount = Array.prototype.slice
@@ -21,6 +28,8 @@ class HideUnanswered {
 
     logger(`Total matches that need a response: ${unansweredCount}`);
   };
+
+
 
   scrollMatchesToEnd = (cb) => {
     const currHeight = document.querySelector('.matchListTitle').parentElement.scrollTop;

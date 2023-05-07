@@ -35,10 +35,9 @@ const textboxGenerator = ({ className, placeholder, helpText, defaultValue }) =>
         </label>
     </div>
 </div>
-${
-  helpText &&
+${helpText &&
   `<div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">${helpText}</div>`
-}
+  }
 `;
 
 const checkboxGenerator = (className, label, helpText = '') => `
@@ -59,30 +58,29 @@ const checkboxGenerator = (className, label, helpText = '') => `
         </label>
     </div>
 </div>
-${
-  helpText &&
+${helpText &&
   `<div class="settings__bottomSubtitle My(14px) Px(12px)--s Px(17px)--ml Lts(0) Fw($regular) C($c-secondary) Fz($xs) Ta(s)">${helpText}</div>`
-}
+  }
 `;
 
 const autopilot = `
     <div class="Mt(20px)--ml Mt(16px)--s">
         ${titleGenerator('Main Settings')}
         ${checkboxGenerator(
-          'tinderAutopilot',
-          'Auto like',
-          'Begin automatically swiping right on all profiles.'
-        )}
+  'tinderAutopilot',
+  'Auto like',
+  'Begin automatically swiping right on all profiles.'
+)}
         ${checkboxGenerator(
-          'tinderAutopilotHideMine',
-          'Only show unanswered messages',
-          'Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.'
-        )}
+  'tinderAutopilotHideMine',
+  'Only show unanswered messages',
+  'Useful if you just sent an auto message to a ton of people and only want to see the ones that responded.'
+)}
         ${checkboxGenerator(
-          'tinderAutopilotAnonymous',
-          'Anonymous Mode',
-          'Hide profile pictures so you can take screenshots.'
-        )}
+  'tinderAutopilotAnonymous',
+  'Anonymous Mode',
+  'Hide profile pictures so you can take screenshots.'
+)}
   </div>
 `;
 

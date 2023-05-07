@@ -45,7 +45,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## Author
 
-👤 **A Lonely Coder <hashtagnogf@protonmail.com>**
+👤 **Geczy <hashtagnogf@protonmail.com>**
 
 ## Show your support
 

@@ -35,7 +35,7 @@ class Sidebar {
   sidebar = () => {
     const el = document.createElement('aside');
     el.className = 'H(100%) Fld(c) Pos(r) Flxg(0) Fxs(0) Flxb(25%) Miw(325px) Maw(375px)';
-    el.style.cssText = 'background-color:white;z-index:9999999;';
+    el.style.cssText = 'background-color:#1f2937;z-index:9999999;';
     el.innerHTML = infoBanner;
     this.insertBefore(el, document.querySelector('aside:first-of-type'));
 
@@ -44,7 +44,7 @@ class Sidebar {
     this.infoBanner.innerHTML =
       `<nav class="Pos(r)  H(100%) gamepad-control-off">
           <div class="H(100%)"><div class="Ov(h) Bgc($c-bg-lite-blue) menu Pos(r) H(100%)">
-          <div class="menu__content Bgc($c-bg-lite-blue) Pb(50px) Fz($responsiveLarge)--m H(100%) Ovs(touch) Ovx(h) Ovy(s) Ovsby(n)">${topBanner}${counterLogs(
+          <div class="menu__content Bgc(#c1e6f9) Pb(50px) Fz($responsiveLarge)--m H(100%) Ovs(touch) Ovx(h) Ovy(s) Ovsby(n)">${topBanner}${counterLogs(
         0,
         0
       )}${autopilot}${massMessage}${loggerHeader}<div class="txt" style="overflow-y: auto; height: 100%;"></div>` +

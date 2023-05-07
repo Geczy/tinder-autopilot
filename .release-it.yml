@@ -2,11 +2,12 @@ npm:
   publish: false
 hooks:
   after:bump:
-    - rm -f zips/tinder-autopilot-v*.zip
+    - mkdir -p zips
+    - rm -f zips/tinder-autopilot-v*.zip || true
     - bash chrome/bump-version.sh ${version}
     - yarn build
     - cd dist/ && bestzip tinder-autopilot-v${version}.zip * && mv tinder-autopilot-v* ../zips/ && cd ..
-  after:release: rm -f zips/tinder-autopilot-v*.zip
+  after:release: mkdir -p zips && rm -f zips/tinder-autopilot-v*.zip || true
 git:
   requireCleanWorkingDir: false
 github:
